@@ -1,0 +1,74 @@
+1763497852.743397 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:95 __init__ INFO: Starting DataFlowKernel with config
+Config(
+    app_cache=True, 
+    checkpoint_files=None, 
+    checkpoint_mode=None, 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(ThreadPoolExecutor(
+        label='threads_local', 
+        max_threads=4, 
+        storage_access=None, 
+        thread_name_prefix='', 
+        working_dir=None
+    ),), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=True, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=0, 
+    retry_handler=None, 
+    run_dir='runinfo', 
+    std_autopath=None, 
+    strategy='simple', 
+    strategy_period=5, 
+    usage_tracking=0
+)
+1763497852.743779 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:97 __init__ INFO: Parsl version: 2025.01.13
+1763497852.744182 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.usage_tracking.usage:119 __init__ DEBUG: Tracking level: 0
+1763497852.744421 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:119 __init__ INFO: Run id is: 30a27028-a44b-4f0d-8fea-7e299d15c981
+1763497852.770624 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:126 __init__ DEBUG: Considering candidate for workflow name: /usr/local/lib/python3.10/dist-packages/parsl/dataflow/dflow.py
+1763497852.770839 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:126 __init__ DEBUG: Considering candidate for workflow name: /usr/local/lib/python3.10/dist-packages/parsl/dataflow/dflow.py
+1763497852.771005 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:126 __init__ DEBUG: Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/Translation Test/Gemini/AdiosParsl.py
+1763497852.771128 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:132 __init__ DEBUG: Using AdiosParsl.py as workflow name
+1763497852.771349 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.memoization:163 __init__ INFO: App caching initialized
+1763497852.771495 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.jobs.strategy:145 __init__ DEBUG: Scaling strategy: simple
+1763497852.772315 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:1007 submit DEBUG: Task 0 will be sent to executor threads_local
+1763497852.772508 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1763497852.772629 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1763497852.772754 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1763497852.772935 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1763497852.773090 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:1089 submit INFO: Task 0 submitted for App kdv_simulation, not waiting on any dependency
+1763497852.773240 2025-11-18 17:30:52 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:1095 submit DEBUG: Task 0 set to pending state with AppFuture: <AppFuture at 0x75c1ebbadf60 state=pending>
+1763497852.773735 2025-11-18 17:30:52 MainProcess-201329 Dependency-Launch_0-129475733481024 parsl.dataflow.memoization:222 check_memo DEBUG: Task 0 will not be memoized
+1763497852.775006 2025-11-18 17:30:52 MainProcess-201329 Dependency-Launch_0-129475733481024 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 0 try 0 launched on executor threads_local
+1763497852.780632 2025-11-18 17:30:52 MainProcess-201329 Dependency-Launch_0-129475733481024 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 0 will not be redirected.
+1763497852.786051 2025-11-18 17:30:52 MainProcess-201329 Dependency-Launch_0-129475733481024 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 0 will not be redirected.
+1763497852.791732 2025-11-18 17:30:52 MainProcess-201329 Dependency-Launch_0-129475733481024 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1763497857.777382 2025-11-18 17:30:57 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497857.783125 2025-11-18 17:30:57 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497862.794246 2025-11-18 17:31:02 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497862.799885 2025-11-18 17:31:02 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497867.810902 2025-11-18 17:31:07 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497867.816655 2025-11-18 17:31:07 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497872.827936 2025-11-18 17:31:12 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497872.833771 2025-11-18 17:31:12 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497877.844569 2025-11-18 17:31:17 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497877.850207 2025-11-18 17:31:17 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497882.861261 2025-11-18 17:31:22 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497882.867029 2025-11-18 17:31:22 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497887.877891 2025-11-18 17:31:27 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497887.883737 2025-11-18 17:31:27 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497892.895099 2025-11-18 17:31:32 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497892.900941 2025-11-18 17:31:32 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497897.911947 2025-11-18 17:31:37 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497897.917744 2025-11-18 17:31:37 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497902.928667 2025-11-18 17:31:42 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.jobs.strategy:184 _general_strategy DEBUG: general strategy starting with strategy_type simple for 0 executors
+1763497902.934458 2025-11-18 17:31:42 MainProcess-201329 JobStatusPoller-Timer-Thread-129475744028736-129475741873728 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _general_strategy on thread JobStatusPoller-Timer-Thread-129475744028736
+1763497904.812740 2025-11-18 17:31:44 MainProcess-201329 ThreadPoolExecutor-0_0-129475725088320 parsl.dataflow.dflow:588 _complete_task INFO: Task 0 completed (launched -> exec_done)
+1763497904.813114 2025-11-18 17:31:44 MainProcess-201329 ThreadPoolExecutor-0_0-129475725088320 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 0 will not be redirected.
+1763497904.813535 2025-11-18 17:31:44 MainProcess-201329 ThreadPoolExecutor-0_0-129475725088320 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 0 will not be redirected.
+1763497904.813889 2025-11-18 17:31:44 MainProcess-201329 MainThread-129476151747712 parsl.dataflow.dflow:1160 atexit_cleanup WARNING: Python is exiting with a DFK still running. You should call parsl.dfk().cleanup() before exiting to release any resources

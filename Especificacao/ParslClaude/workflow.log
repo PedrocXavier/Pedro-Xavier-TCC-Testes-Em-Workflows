@@ -1,0 +1,216 @@
+2025-07-18 02:34:30,138 - __main__ - INFO - Configuração do dataset: {'max_workers': 4, 'cores_per_worker': 2, 'max_blocks': 2, 'chunk_size': 10000}
+2025-07-18 02:34:30,145 - parsl.dataflow.dflow - INFO - Starting DataFlowKernel with config
+Config(
+    app_cache=True, 
+    checkpoint_files=None, 
+    checkpoint_mode='task_exit', 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(ThreadPoolExecutor(
+        label='local_threads', 
+        max_threads=4, 
+        remote_monitoring_radio=<parsl.monitoring.radios.multiprocessing.MultiprocessingQueueRadio object at 0x760d29c84040>, 
+        storage_access=None, 
+        thread_name_prefix='', 
+        working_dir=None
+    ), HighThroughputExecutor(
+        address=None, 
+        address_probe_timeout=None, 
+        available_accelerators=[], 
+        block_error_handler=<function simple_error_handler at 0x760d291696c0>, 
+        cores_per_worker=1, 
+        cpu_affinity='none', 
+        drain_period=None, 
+        encrypted=False, 
+        heartbeat_period=30, 
+        heartbeat_threshold=120, 
+        interchange_launch_cmd=['interchange.py'], 
+        interchange_port_range=(55000, 56000), 
+        label='local_htex', 
+        launch_cmd='process_worker_pool.py {debug} {max_workers_per_node} -a {addresses} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --port={worker_port} --cert_dir {cert_dir} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} {address_probe_timeout_string} --hb_threshold={heartbeat_threshold} --drain_period={drain_period} --cpu-affinity {cpu_affinity} {enable_mpi_mode} --mpi-launcher={mpi_launcher} --available-accelerators {accelerators}', 
+        loopback_address='127.0.0.1', 
+        manager_selector=<parsl.executors.high_throughput.manager_selector.RandomManagerSelector object at 0x760d291a0310>, 
+        max_workers_per_node=inf, 
+        mem_per_worker=None, 
+        poll_period=10, 
+        prefetch_capacity=0, 
+        provider=LocalProvider(
+            cmd_timeout=30, 
+            init_blocks=1, 
+            launcher=SingleNodeLauncher(debug=True, fail_on_any=False), 
+            max_blocks=1, 
+            min_blocks=0, 
+            nodes_per_block=1, 
+            parallelism=1, 
+            worker_init=''
+        ), 
+        remote_monitoring_radio=<parsl.monitoring.radios.htex.HTEXRadio object at 0x760d28fe55a0>, 
+        storage_access=None, 
+        worker_debug=False, 
+        worker_logdir_root=None, 
+        worker_port=None, 
+        worker_port_range=(54000, 55000), 
+        working_dir=None
+    )), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=True, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=2, 
+    retry_handler=None, 
+    run_dir='parsl_rundir', 
+    std_autopath=None, 
+    strategy=None, 
+    strategy_period=5, 
+    usage_tracking=True
+)
+2025-07-18 02:34:30,146 - parsl.dataflow.dflow - INFO - Parsl version: 2025.07.14
+2025-07-18 02:34:30,147 - parsl.usage_tracking.usage - DEBUG - Tracking level: True
+2025-07-18 02:34:30,147 - parsl.usage_tracking.usage - INFO - Sending start message for usage tracking
+2025-07-18 02:34:30,148 - parsl.usage_tracking.usage - DEBUG - Usage tracking start message: {'correlator': 'b940a353-cb4f-4fc2-88a9-1f315a1e4dfc', 'parsl_v': '2025.07.14', 'python_v': '3.10.12', 'platform.system': 'Linux', 'tracking_level': 1}
+2025-07-18 02:34:30,157 - parsl.usage_tracking.usage - DEBUG - Usage tracking failed: Can't pickle <function udp_messenger at 0x760d28ffdf30>: it's not the same object as parsl.usage_tracking.usage.udp_messenger
+2025-07-18 02:34:30,158 - parsl.dataflow.dflow - INFO - Run id is: b5c5f27d-663d-47e5-9805-fae8e4264a50
+2025-07-18 02:34:32,930 - parsl.dataflow.dflow - DEBUG - Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/parsl_env/lib/python3.10/site-packages/parsl/dataflow/dflow.py
+2025-07-18 02:34:32,930 - parsl.dataflow.dflow - DEBUG - Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/parsl_env/lib/python3.10/site-packages/parsl/dataflow/dflow.py
+2025-07-18 02:34:32,931 - parsl.dataflow.dflow - DEBUG - Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/ParslClaude/ParslTest.py
+2025-07-18 02:34:32,931 - parsl.dataflow.dflow - DEBUG - Using ParslTest.py as workflow name
+2025-07-18 02:34:32,933 - parsl.dataflow.memoization - INFO - App caching initialized
+2025-07-18 02:34:32,933 - parsl.jobs.strategy - DEBUG - Scaling strategy: None
+2025-07-18 02:34:32,948 - parsl.executors.high_throughput.executor - DEBUG - Starting result queue thread
+2025-07-18 02:34:32,949 - parsl.executors.high_throughput.executor - DEBUG - Result queue worker starting
+2025-07-18 02:34:32,949 - parsl.executors.high_throughput.executor - DEBUG - Started result queue thread: <Thread(HTEX-Result-Queue-Thread, started daemon 129798676411968)>
+2025-07-18 02:34:32,954 - parsl.executors.high_throughput.executor - DEBUG - Popened interchange process. Writing config object
+2025-07-18 02:34:32,954 - parsl.executors.high_throughput.executor - DEBUG - Sent config object. Requesting worker ports
+2025-07-18 02:34:32,955 - parsl.executors.high_throughput.zmq_pipes - DEBUG - Sending command client command
+2025-07-18 02:34:35,201 - parsl.executors.high_throughput.zmq_pipes - DEBUG - Polling for command client response or timeout
+2025-07-18 02:34:35,202 - parsl.executors.high_throughput.zmq_pipes - DEBUG - Receiving command client response
+2025-07-18 02:34:35,203 - parsl.executors.high_throughput.zmq_pipes - DEBUG - Received command client response
+2025-07-18 02:34:35,203 - parsl.executors.high_throughput.executor - DEBUG - Interchange process started (<Popen: returncode: None args: ['interchange.py']>).  Worker port: 54304
+2025-07-18 02:34:35,204 - parsl.executors.high_throughput.executor - DEBUG - Launch command: process_worker_pool.py   -a 179.137.197.113,172.27.45.194,127.0.1.1,127.0.0.1 -p 0 -c 1 -m None --poll 10 --port=54304 --cert_dir None --logdir=/mnt/c/Users/pedro/Pedro/TCC/ParslClaude/parsl_rundir/000/local_htex --block_id={block_id} --hb_period=30  --hb_threshold=120 --drain_period=None --cpu-affinity none  --mpi-launcher=mpiexec --available-accelerators 
+2025-07-18 02:34:35,204 - parsl.executors.high_throughput.executor - DEBUG - Starting HighThroughputExecutor with provider:
+LocalProvider(
+    cmd_timeout=30, 
+    init_blocks=1, 
+    launcher=SingleNodeLauncher(debug=True, fail_on_any=False), 
+    max_blocks=1, 
+    min_blocks=0, 
+    nodes_per_block=1, 
+    parallelism=1, 
+    worker_init=''
+)
+2025-07-18 02:34:35,205 - parsl.jobs.job_status_poller - DEBUG - Adding executor local_htex
+2025-07-18 02:34:35,206 - __main__ - INFO - Parsl configurado para ambiente: local
+2025-07-18 02:34:35,206 - __main__ - ERROR - Especifique um arquivo com --arquivo ou use --gerar-exemplo
+2025-07-18 02:34:35,206 - __main__ - INFO - Recursos Parsl limpos
+2025-07-18 02:34:35,206 - parsl.dataflow.dflow - WARNING - Python is exiting with a DFK still running. You should call parsl.dfk().cleanup() before exiting to release any resources
+2025-07-18 02:38:10,431 - __main__ - INFO - Configuração do dataset: {'max_workers': 4, 'cores_per_worker': 2, 'max_blocks': 2, 'chunk_size': 10000}
+2025-07-18 02:38:10,438 - parsl.dataflow.dflow - INFO - Starting DataFlowKernel with config
+Config(
+    app_cache=True, 
+    checkpoint_files=None, 
+    checkpoint_mode='task_exit', 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(ThreadPoolExecutor(
+        label='local_threads', 
+        max_threads=4, 
+        remote_monitoring_radio=<parsl.monitoring.radios.multiprocessing.MultiprocessingQueueRadio object at 0x7b13b3f74610>, 
+        storage_access=None, 
+        thread_name_prefix='', 
+        working_dir=None
+    ), HighThroughputExecutor(
+        address=None, 
+        address_probe_timeout=None, 
+        available_accelerators=[], 
+        block_error_handler=<function simple_error_handler at 0x7b13b34596c0>, 
+        cores_per_worker=1, 
+        cpu_affinity='none', 
+        drain_period=None, 
+        encrypted=False, 
+        heartbeat_period=30, 
+        heartbeat_threshold=120, 
+        interchange_launch_cmd=['interchange.py'], 
+        interchange_port_range=(55000, 56000), 
+        label='local_htex', 
+        launch_cmd='process_worker_pool.py {debug} {max_workers_per_node} -a {addresses} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --port={worker_port} --cert_dir {cert_dir} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} {address_probe_timeout_string} --hb_threshold={heartbeat_threshold} --drain_period={drain_period} --cpu-affinity {cpu_affinity} {enable_mpi_mode} --mpi-launcher={mpi_launcher} --available-accelerators {accelerators}', 
+        loopback_address='127.0.0.1', 
+        manager_selector=<parsl.executors.high_throughput.manager_selector.RandomManagerSelector object at 0x7b13b3490490>, 
+        max_workers_per_node=inf, 
+        mem_per_worker=None, 
+        poll_period=10, 
+        prefetch_capacity=0, 
+        provider=LocalProvider(
+            cmd_timeout=30, 
+            init_blocks=1, 
+            launcher=SingleNodeLauncher(debug=True, fail_on_any=False), 
+            max_blocks=1, 
+            min_blocks=0, 
+            nodes_per_block=1, 
+            parallelism=1, 
+            worker_init=''
+        ), 
+        remote_monitoring_radio=<parsl.monitoring.radios.htex.HTEXRadio object at 0x7b13b3371570>, 
+        storage_access=None, 
+        worker_debug=False, 
+        worker_logdir_root=None, 
+        worker_port=None, 
+        worker_port_range=(54000, 55000), 
+        working_dir=None
+    )), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=True, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=2, 
+    retry_handler=None, 
+    run_dir='parsl_rundir', 
+    std_autopath=None, 
+    strategy=None, 
+    strategy_period=5, 
+    usage_tracking=True
+)
+2025-07-18 02:38:10,439 - parsl.dataflow.dflow - INFO - Parsl version: 2025.07.14
+2025-07-18 02:38:10,440 - parsl.usage_tracking.usage - DEBUG - Tracking level: True
+2025-07-18 02:38:10,440 - parsl.usage_tracking.usage - INFO - Sending start message for usage tracking
+2025-07-18 02:38:10,441 - parsl.usage_tracking.usage - DEBUG - Usage tracking start message: {'correlator': '3c3960a5-14f5-4248-820e-72d0b28294c4', 'parsl_v': '2025.07.14', 'python_v': '3.10.12', 'platform.system': 'Linux', 'tracking_level': 1}
+2025-07-18 02:38:10,448 - parsl.usage_tracking.usage - DEBUG - Usage tracking failed: Can't pickle <function udp_messenger at 0x7b13b32e5f30>: it's not the same object as parsl.usage_tracking.usage.udp_messenger
+2025-07-18 02:38:10,449 - parsl.dataflow.dflow - INFO - Run id is: 5513c80b-67f6-40c0-8deb-3734eb269fdb
+2025-07-18 02:38:12,781 - parsl.dataflow.dflow - DEBUG - Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/parsl_env/lib/python3.10/site-packages/parsl/dataflow/dflow.py
+2025-07-18 02:38:12,782 - parsl.dataflow.dflow - DEBUG - Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/parsl_env/lib/python3.10/site-packages/parsl/dataflow/dflow.py
+2025-07-18 02:38:12,782 - parsl.dataflow.dflow - DEBUG - Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/ParslClaude/ParslTest.py
+2025-07-18 02:38:12,782 - parsl.dataflow.dflow - DEBUG - Using ParslTest.py as workflow name
+2025-07-18 02:38:12,784 - parsl.dataflow.memoization - INFO - App caching initialized
+2025-07-18 02:38:12,784 - parsl.jobs.strategy - DEBUG - Scaling strategy: None
+2025-07-18 02:38:12,789 - parsl.executors.high_throughput.executor - DEBUG - Starting result queue thread
+2025-07-18 02:38:12,789 - parsl.executors.high_throughput.executor - DEBUG - Result queue worker starting
+2025-07-18 02:38:12,789 - parsl.executors.high_throughput.executor - DEBUG - Started result queue thread: <Thread(HTEX-Result-Queue-Thread, started daemon 135324530038336)>
+2025-07-18 02:38:12,792 - parsl.executors.high_throughput.executor - DEBUG - Popened interchange process. Writing config object
+2025-07-18 02:38:12,793 - parsl.executors.high_throughput.executor - DEBUG - Sent config object. Requesting worker ports
+2025-07-18 02:38:12,794 - parsl.executors.high_throughput.zmq_pipes - DEBUG - Sending command client command
+2025-07-18 02:38:14,818 - parsl.executors.high_throughput.zmq_pipes - DEBUG - Polling for command client response or timeout
+2025-07-18 02:38:14,821 - parsl.executors.high_throughput.zmq_pipes - DEBUG - Receiving command client response
+2025-07-18 02:38:14,821 - parsl.executors.high_throughput.zmq_pipes - DEBUG - Received command client response
+2025-07-18 02:38:14,821 - parsl.executors.high_throughput.executor - DEBUG - Interchange process started (<Popen: returncode: None args: ['interchange.py']>).  Worker port: 54651
+2025-07-18 02:38:14,822 - parsl.executors.high_throughput.executor - DEBUG - Launch command: process_worker_pool.py   -a 179.137.197.113,127.0.0.1,172.27.45.194,127.0.1.1 -p 0 -c 1 -m None --poll 10 --port=54651 --cert_dir None --logdir=/mnt/c/Users/pedro/Pedro/TCC/ParslClaude/parsl_rundir/001/local_htex --block_id={block_id} --hb_period=30  --hb_threshold=120 --drain_period=None --cpu-affinity none  --mpi-launcher=mpiexec --available-accelerators 
+2025-07-18 02:38:14,822 - parsl.executors.high_throughput.executor - DEBUG - Starting HighThroughputExecutor with provider:
+LocalProvider(
+    cmd_timeout=30, 
+    init_blocks=1, 
+    launcher=SingleNodeLauncher(debug=True, fail_on_any=False), 
+    max_blocks=1, 
+    min_blocks=0, 
+    nodes_per_block=1, 
+    parallelism=1, 
+    worker_init=''
+)
+2025-07-18 02:38:14,823 - parsl.jobs.job_status_poller - DEBUG - Adding executor local_htex
+2025-07-18 02:38:14,823 - __main__ - INFO - Parsl configurado para ambiente: local
+2025-07-18 02:38:14,823 - __main__ - ERROR - Especifique um arquivo com --arquivo ou use --gerar-exemplo
+2025-07-18 02:38:14,823 - __main__ - INFO - Recursos Parsl limpos
+2025-07-18 02:38:14,824 - parsl.dataflow.dflow - WARNING - Python is exiting with a DFK still running. You should call parsl.dfk().cleanup() before exiting to release any resources

@@ -1,0 +1,486 @@
+1759939038.285249 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:95 __init__ INFO: Starting DataFlowKernel with config
+Config(
+    app_cache=True, 
+    checkpoint_files=None, 
+    checkpoint_mode=None, 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(ThreadPoolExecutor(
+        label='threads', 
+        max_threads=8, 
+        storage_access=None, 
+        thread_name_prefix='', 
+        working_dir=None
+    ),), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=True, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=0, 
+    retry_handler=None, 
+    run_dir='runinfo', 
+    std_autopath=None, 
+    strategy='simple', 
+    strategy_period=5, 
+    usage_tracking=0
+)
+1759939038.285872 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:97 __init__ INFO: Parsl version: 2025.01.13
+1759939038.286222 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.usage_tracking.usage:119 __init__ DEBUG: Tracking level: 0
+1759939038.286514 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:119 __init__ INFO: Run id is: 77ed1cac-e3c3-43aa-a8db-bcecf3c0d913
+1759939038.325135 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:126 __init__ DEBUG: Considering candidate for workflow name: /usr/local/lib/python3.10/dist-packages/parsl/dataflow/dflow.py
+1759939038.325450 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:126 __init__ DEBUG: Considering candidate for workflow name: /usr/local/lib/python3.10/dist-packages/parsl/dataflow/dflow.py
+1759939038.325673 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:126 __init__ DEBUG: Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/ParslClaude/ParslClaude.py
+1759939038.325897 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:132 __init__ DEBUG: Using ParslClaude.py as workflow name
+1759939038.326297 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.memoization:163 __init__ INFO: App caching initialized
+1759939038.326604 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.jobs.strategy:145 __init__ DEBUG: Scaling strategy: simple
+1759939038.418435 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 0 will be sent to executor threads
+1759939038.418786 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.418998 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.419202 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.419417 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.419606 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 0 submitted for App ler_dataset, not waiting on any dependency
+1759939038.419810 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 0 set to pending state with AppFuture: <AppFuture at 0x7f63996a65f0 state=pending>
+1759939038.420435 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 0 will not be memoized
+1759939038.420532 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 1 will be sent to executor threads
+1759939038.421197 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.421273 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 0 try 0 launched on executor threads
+1759939038.421478 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.421669 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 0 will not be redirected.
+1759939038.421871 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.422082 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 0 will not be redirected.
+1759939038.422453 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.422752 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.422977 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 1 submitted for App agrupar_por_categoria, waiting on task 0
+1759939038.423786 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 1 set to pending state with AppFuture: <AppFuture at 0x7f63996a6d70 state=pending>
+1759939038.424053 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:655 _launch_if_ready_async DEBUG: Task 1 has outstanding dependencies, so launch_if_ready skipping
+1759939038.424255 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.435446 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:588 _complete_task INFO: Task 0 completed (launched -> exec_done)
+1759939038.435947 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 0 will not be redirected.
+1759939038.436113 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 1 will not be memoized
+1759939038.436292 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 0 will not be redirected.
+1759939038.440443 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 1 try 0 launched on executor threads
+1759939038.440968 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 1 will not be redirected.
+1759939038.442909 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 1 will not be redirected.
+1759939038.443237 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 1 completed (launched -> exec_done)
+1759939038.443495 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 1 will not be redirected.
+1759939038.443692 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 2 will be sent to executor threads
+1759939038.443835 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 1 will not be redirected.
+1759939038.444081 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.444221 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.444432 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.444760 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.445038 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.445234 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 2 submitted for App calcular_estatisticas_preco, not waiting on any dependency
+1759939038.445426 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 2 set to pending state with AppFuture: <AppFuture at 0x7f63996a7a30 state=pending>
+1759939038.445657 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 3 will be sent to executor threads
+1759939038.445816 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 2 will not be memoized
+1759939038.446027 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.446245 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 2 try 0 launched on executor threads
+1759939038.446800 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.446971 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 2 will not be redirected.
+1759939038.447195 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.447363 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 2 will not be redirected.
+1759939038.447532 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.447723 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 2 completed (launched -> exec_done)
+1759939038.447893 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 3 submitted for App calcular_unidades_vendidas, not waiting on any dependency
+1759939038.448133 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 2 will not be redirected.
+1759939038.448345 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 3 set to pending state with AppFuture: <AppFuture at 0x7f63996a6dd0 state=pending>
+1759939038.448529 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 2 will not be redirected.
+1759939038.448770 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 4 will be sent to executor threads
+1759939038.448904 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.449124 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.449331 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 3 will not be memoized
+1759939038.449440 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.449639 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 3 try 0 launched on executor threads
+1759939038.450052 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.450274 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 3 will not be redirected.
+1759939038.450514 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.450712 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 3 will not be redirected.
+1759939038.450889 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 4 submitted for App calcular_receita_total, not waiting on any dependency
+1759939038.451126 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 3 completed (launched -> exec_done)
+1759939038.451352 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 4 set to pending state with AppFuture: <AppFuture at 0x7f63996a7ac0 state=pending>
+1759939038.451528 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 3 will not be redirected.
+1759939038.451785 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 5 will be sent to executor threads
+1759939038.451952 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 3 will not be redirected.
+1759939038.452168 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.452353 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.452549 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.452794 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 4 will not be memoized
+1759939038.452939 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.453193 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 4 try 0 launched on executor threads
+1759939038.454538 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.454796 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 4 will not be redirected.
+1759939038.455060 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 5 submitted for App consolidar_metricas, waiting on task 2, task 3, task 4
+1759939038.455313 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 4 will not be redirected.
+1759939038.455671 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 5 set to pending state with AppFuture: <AppFuture at 0x7f639973cdf0 state=pending>
+1759939038.456005 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 4 completed (launched -> exec_done)
+1759939038.456448 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 6 will be sent to executor threads
+1759939038.456636 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 4 will not be redirected.
+1759939038.456812 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.456970 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 4 will not be redirected.
+1759939038.457180 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.457377 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.457533 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.457816 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 5 will not be memoized
+1759939038.457979 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.458231 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 5 try 0 launched on executor threads
+1759939038.458450 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 6 submitted for App salvar_resultado_csv, waiting on task 5
+1759939038.458717 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 5 will not be redirected.
+1759939038.458909 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 6 set to pending state with AppFuture: <AppFuture at 0x7f639973cf10 state=pending>
+1759939038.459085 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 5 will not be redirected.
+1759939038.459370 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 7 will be sent to executor threads
+1759939038.459542 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 5 completed (launched -> exec_done)
+1759939038.459718 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.459925 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 5 will not be redirected.
+1759939038.460041 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.460230 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 5 will not be redirected.
+1759939038.460431 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.460616 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.460801 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.461017 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 5 is not pending, so launch_if_ready skipping
+1759939038.461173 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 7 submitted for App calcular_estatisticas_preco, not waiting on any dependency
+1759939038.461355 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.461548 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 7 set to pending state with AppFuture: <AppFuture at 0x7f639973d4b0 state=pending>
+1759939038.461726 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 5 is not pending, so launch_if_ready skipping
+1759939038.461972 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 8 will be sent to executor threads
+1759939038.462165 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.462430 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.462605 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 5 is not pending, so launch_if_ready skipping
+1759939038.462752 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.462937 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.463165 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.463425 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 6 will not be memoized
+1759939038.463561 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.463769 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 6 try 0 launched on executor threads
+1759939038.464016 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 8 submitted for App calcular_unidades_vendidas, not waiting on any dependency
+1759939038.464221 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 6 will not be redirected.
+1759939038.464432 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 8 set to pending state with AppFuture: <AppFuture at 0x7f639973cfa0 state=pending>
+1759939038.464640 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 6 will not be redirected.
+1759939038.464896 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 9 will be sent to executor threads
+1759939038.465999 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.466437 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.466695 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 6 is not pending, so launch_if_ready skipping
+1759939038.466846 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.467095 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.467310 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.467602 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 7 will not be memoized
+1759939038.467808 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.468103 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 7 try 0 launched on executor threads
+1759939038.470492 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 9 submitted for App calcular_receita_total, not waiting on any dependency
+1759939038.470891 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 7 will not be redirected.
+1759939038.471263 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 9 set to pending state with AppFuture: <AppFuture at 0x7f639973d390 state=pending>
+1759939038.471681 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 7 will not be redirected.
+1759939038.471962 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 10 will be sent to executor threads
+1759939038.472174 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 7 completed (launched -> exec_done)
+1759939038.472517 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.472826 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:588 _complete_task INFO: Task 6 completed (launched -> exec_done)
+1759939038.473114 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 7 will not be redirected.
+1759939038.473375 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.473620 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 6 will not be redirected.
+1759939038.473807 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 7 will not be redirected.
+1759939038.474019 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.474220 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 6 will not be redirected.
+1759939038.474404 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.474605 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.475055 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 8 will not be memoized
+1759939038.475200 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 10 submitted for App consolidar_metricas, waiting on task 7, task 8, task 9
+1759939038.475400 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 8 try 0 launched on executor threads
+1759939038.475842 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 10 set to pending state with AppFuture: <AppFuture at 0x7f639973d0f0 state=pending>
+1759939038.475988 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 8 will not be redirected.
+1759939038.476237 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 11 will be sent to executor threads
+1759939038.476373 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 8 will not be redirected.
+1759939038.476580 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.476735 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 8 completed (launched -> exec_done)
+1759939038.476928 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.477093 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 8 will not be redirected.
+1759939038.477368 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.477581 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 8 will not be redirected.
+1759939038.477790 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.477952 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.478165 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 11 submitted for App salvar_resultado_csv, waiting on task 10
+1759939038.478347 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 9 will not be memoized
+1759939038.478571 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 11 set to pending state with AppFuture: <AppFuture at 0x7f639973d990 state=pending>
+1759939038.478789 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 9 try 0 launched on executor threads
+1759939038.479960 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 12 will be sent to executor threads
+1759939038.480100 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 9 will not be redirected.
+1759939038.480309 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.480694 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 9 will not be redirected.
+1759939038.480896 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.481092 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 9 completed (launched -> exec_done)
+1759939038.481251 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.481491 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 9 will not be redirected.
+1759939038.481640 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.481801 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 9 will not be redirected.
+1759939038.481994 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 12 submitted for App calcular_estatisticas_preco, not waiting on any dependency
+1759939038.482190 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.482377 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 12 set to pending state with AppFuture: <AppFuture at 0x7f639973d000 state=pending>
+1759939038.482575 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 10 will not be memoized
+1759939038.482743 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 13 will be sent to executor threads
+1759939038.482936 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 10 try 0 launched on executor threads
+1759939038.483226 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.483395 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 10 will not be redirected.
+1759939038.483619 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.483766 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 10 will not be redirected.
+1759939038.483960 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.484152 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 10 completed (launched -> exec_done)
+1759939038.484354 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.484563 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 10 will not be redirected.
+1759939038.484715 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 13 submitted for App calcular_unidades_vendidas, not waiting on any dependency
+1759939038.484934 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 10 will not be redirected.
+1759939038.485192 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 13 set to pending state with AppFuture: <AppFuture at 0x7f639973d930 state=pending>
+1759939038.485387 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.485703 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 14 will be sent to executor threads
+1759939038.485878 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 10 is not pending, so launch_if_ready skipping
+1759939038.486125 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.486283 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.486547 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.486897 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 10 is not pending, so launch_if_ready skipping
+1759939038.487052 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.487293 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.487500 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.487781 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 11 will not be memoized
+1759939038.487909 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 14 submitted for App calcular_receita_total, not waiting on any dependency
+1759939038.488135 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 11 try 0 launched on executor threads
+1759939038.488413 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 14 set to pending state with AppFuture: <AppFuture at 0x7f639973d7b0 state=pending>
+1759939038.488610 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 11 will not be redirected.
+1759939038.488867 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 15 will be sent to executor threads
+1759939038.489078 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 11 will not be redirected.
+1759939038.489283 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.489436 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.490625 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.490906 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 10 is not pending, so launch_if_ready skipping
+1759939038.491124 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.491384 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.491617 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.491862 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 12 will not be memoized
+1759939038.492059 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 15 submitted for App consolidar_metricas, waiting on task 12, task 13, task 14
+1759939038.492348 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 12 try 0 launched on executor threads
+1759939038.495095 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 15 set to pending state with AppFuture: <AppFuture at 0x7f639973d180 state=pending>
+1759939038.495559 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 12 will not be redirected.
+1759939038.495825 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 16 will be sent to executor threads
+1759939038.496000 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 12 will not be redirected.
+1759939038.496263 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.496431 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 12 completed (launched -> exec_done)
+1759939038.496542 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:588 _complete_task INFO: Task 11 completed (launched -> exec_done)
+1759939038.496716 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.496935 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 12 will not be redirected.
+1759939038.497127 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 11 will not be redirected.
+1759939038.497311 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.497518 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 12 will not be redirected.
+1759939038.497736 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 11 will not be redirected.
+1759939038.497938 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.498122 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.498494 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 16 submitted for App salvar_resultado_csv, waiting on task 15
+1759939038.498684 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 11 is not pending, so launch_if_ready skipping
+1759939038.499029 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.498885 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 16 set to pending state with AppFuture: <AppFuture at 0x7f639973e9e0 state=pending>
+1759939038.499358 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 13 will not be memoized
+1759939038.499632 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 17 will be sent to executor threads
+1759939038.499917 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 13 try 0 launched on executor threads
+1759939038.500562 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.500776 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 13 will not be redirected.
+1759939038.500996 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.501261 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 13 will not be redirected.
+1759939038.501502 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.501782 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 13 completed (launched -> exec_done)
+1759939038.501976 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.502336 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 13 will not be redirected.
+1759939038.502613 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 17 submitted for App calcular_estatisticas_preco, not waiting on any dependency
+1759939038.503033 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 13 will not be redirected.
+1759939038.503504 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 17 set to pending state with AppFuture: <AppFuture at 0x7f639973e9b0 state=pending>
+1759939038.503675 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.503887 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 18 will be sent to executor threads
+1759939038.504083 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 14 will not be memoized
+1759939038.504248 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.504443 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 14 try 0 launched on executor threads
+1759939038.505385 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.505592 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 14 will not be redirected.
+1759939038.505778 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.505998 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 14 will not be redirected.
+1759939038.506220 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.506409 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 14 completed (launched -> exec_done)
+1759939038.506573 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 18 submitted for App calcular_unidades_vendidas, not waiting on any dependency
+1759939038.506770 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 14 will not be redirected.
+1759939038.506925 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 18 set to pending state with AppFuture: <AppFuture at 0x7f639973e5c0 state=pending>
+1759939038.507109 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 14 will not be redirected.
+1759939038.507327 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 19 will be sent to executor threads
+1759939038.507515 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.507694 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.507954 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 15 will not be memoized
+1759939038.508080 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.508291 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 15 try 0 launched on executor threads
+1759939038.508584 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.508772 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 15 will not be redirected.
+1759939038.508949 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.509094 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 15 will not be redirected.
+1759939038.509269 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 19 submitted for App calcular_receita_total, not waiting on any dependency
+1759939038.509488 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 15 completed (launched -> exec_done)
+1759939038.509772 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 19 set to pending state with AppFuture: <AppFuture at 0x7f639973ef80 state=pending>
+1759939038.510014 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 15 will not be redirected.
+1759939038.510227 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 20 will be sent to executor threads
+1759939038.510416 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 15 will not be redirected.
+1759939038.510662 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.510858 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.511039 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.511316 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 15 is not pending, so launch_if_ready skipping
+1759939038.511469 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.511622 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.511815 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.512056 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 16 will not be memoized
+1759939038.512187 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 20 submitted for App consolidar_metricas, waiting on task 17, task 18, task 19
+1759939038.512385 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 16 try 0 launched on executor threads
+1759939038.512646 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 20 set to pending state with AppFuture: <AppFuture at 0x7f639973e710 state=pending>
+1759939038.512860 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 16 will not be redirected.
+1759939038.513080 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 21 will be sent to executor threads
+1759939038.513253 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 16 will not be redirected.
+1759939038.513453 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.513692 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.514759 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.515085 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 15 is not pending, so launch_if_ready skipping
+1759939038.515297 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.515493 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.515687 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.515902 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 17 will not be memoized
+1759939038.516057 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 21 submitted for App salvar_resultado_csv, waiting on task 20
+1759939038.516312 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 17 try 0 launched on executor threads
+1759939038.517018 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 21 set to pending state with AppFuture: <AppFuture at 0x7f639973e3b0 state=pending>
+1759939038.519768 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 17 will not be redirected.
+1759939038.520504 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 22 will be sent to executor threads
+1759939038.520747 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 17 will not be redirected.
+1759939038.521016 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.521213 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 17 completed (launched -> exec_done)
+1759939038.521353 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:588 _complete_task INFO: Task 16 completed (launched -> exec_done)
+1759939038.521509 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.521725 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 17 will not be redirected.
+1759939038.521897 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 16 will not be redirected.
+1759939038.522055 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.522277 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 17 will not be redirected.
+1759939038.522441 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 16 will not be redirected.
+1759939038.522662 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.522861 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.523245 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 22 submitted for App calcular_estatisticas_preco, not waiting on any dependency
+1759939038.523445 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 15 is not pending, so launch_if_ready skipping
+1759939038.523614 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 22 set to pending state with AppFuture: <AppFuture at 0x7f639973f5b0 state=pending>
+1759939038.523774 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.523993 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 23 will be sent to executor threads
+1759939038.524220 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 18 will not be memoized
+1759939038.524406 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.524659 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 18 try 0 launched on executor threads
+1759939038.525106 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.525345 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 18 will not be redirected.
+1759939038.525565 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.525767 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 18 will not be redirected.
+1759939038.525963 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.526208 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 18 completed (launched -> exec_done)
+1759939038.526371 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 23 submitted for App calcular_unidades_vendidas, not waiting on any dependency
+1759939038.526628 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 18 will not be redirected.
+1759939038.526770 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 23 set to pending state with AppFuture: <AppFuture at 0x7f639973ea40 state=pending>
+1759939038.526967 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 18 will not be redirected.
+1759939038.527302 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 24 will be sent to executor threads
+1759939038.527480 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.527703 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.527908 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 16 is not pending, so launch_if_ready skipping
+1759939038.528100 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.528281 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.528504 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.528716 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 19 will not be memoized
+1759939038.528847 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.529053 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 19 try 0 launched on executor threads
+1759939038.529957 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 24 submitted for App calcular_receita_total, not waiting on any dependency
+1759939038.530133 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 19 will not be redirected.
+1759939038.530322 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 24 set to pending state with AppFuture: <AppFuture at 0x7f639973f490 state=pending>
+1759939038.530494 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 19 will not be redirected.
+1759939038.530692 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 25 will be sent to executor threads
+1759939038.530865 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 19 completed (launched -> exec_done)
+1759939038.531052 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.531214 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 19 will not be redirected.
+1759939038.531466 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.531669 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 19 will not be redirected.
+1759939038.531805 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.531986 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.532177 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.532445 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 20 will not be memoized
+1759939038.532582 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 25 submitted for App consolidar_metricas, waiting on task 22, task 23, task 24
+1759939038.532798 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 20 try 0 launched on executor threads
+1759939038.533087 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 25 set to pending state with AppFuture: <AppFuture at 0x7f639973f460 state=pending>
+1759939038.533339 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 20 will not be redirected.
+1759939038.533582 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1007 submit DEBUG: Task 26 will be sent to executor threads
+1759939038.533768 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 20 will not be redirected.
+1759939038.534014 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:809 _add_output_deps DEBUG: Adding output dependencies
+1759939038.534179 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 20 completed (launched -> exec_done)
+1759939038.534387 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1058 submit DEBUG: Added output dependencies
+1759939038.534686 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 20 will not be redirected.
+1759939038.534864 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1071 submit DEBUG: Gathering dependencies
+1759939038.535075 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 20 will not be redirected.
+1759939038.535335 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1074 submit DEBUG: Gathered dependencies
+1759939038.535539 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.535825 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1089 submit INFO: Task 26 submitted for App salvar_resultado_csv, waiting on task 25
+1759939038.536266 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 21 will not be memoized
+1759939038.536420 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1095 submit DEBUG: Task 26 set to pending state with AppFuture: <AppFuture at 0x7f639973f280 state=pending>
+1759939038.536716 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 21 try 0 launched on executor threads
+1759939038.537120 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 21 will not be redirected.
+1759939038.537359 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 21 will not be redirected.
+1759939038.537616 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.537854 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 20 is not pending, so launch_if_ready skipping
+1759939038.538075 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.539301 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 22 will not be memoized
+1759939038.539508 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 22 try 0 launched on executor threads
+1759939038.539874 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 22 will not be redirected.
+1759939038.540044 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 22 will not be redirected.
+1759939038.540310 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 22 completed (launched -> exec_done)
+1759939038.540627 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 22 will not be redirected.
+1759939038.541043 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 22 will not be redirected.
+1759939038.541384 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.543294 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 20 is not pending, so launch_if_ready skipping
+1759939038.543745 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.544140 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 23 will not be memoized
+1759939038.544438 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 23 try 0 launched on executor threads
+1759939038.544891 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:588 _complete_task INFO: Task 21 completed (launched -> exec_done)
+1759939038.544981 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 23 will not be redirected.
+1759939038.545283 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 21 will not be redirected.
+1759939038.545446 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 23 will not be redirected.
+1759939038.545751 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_0-140065661515328 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 21 will not be redirected.
+1759939038.545993 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 23 completed (launched -> exec_done)
+1759939038.546337 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 23 will not be redirected.
+1759939038.546524 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 23 will not be redirected.
+1759939038.546720 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.546933 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 24 will not be memoized
+1759939038.547177 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 24 try 0 launched on executor threads
+1759939038.548042 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 24 will not be redirected.
+1759939038.548228 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 24 will not be redirected.
+1759939038.548421 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 24 completed (launched -> exec_done)
+1759939038.548635 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 24 will not be redirected.
+1759939038.548812 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 24 will not be redirected.
+1759939038.548980 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.549207 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 20 is not pending, so launch_if_ready skipping
+1759939038.549473 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.549748 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 25 will not be memoized
+1759939038.550008 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 25 try 0 launched on executor threads
+1759939038.550221 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 25 will not be redirected.
+1759939038.550423 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 25 will not be redirected.
+1759939038.550697 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:588 _complete_task INFO: Task 25 completed (launched -> exec_done)
+1759939038.550936 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 25 will not be redirected.
+1759939038.551170 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 25 will not be redirected.
+1759939038.551399 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.551633 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 21 is not pending, so launch_if_ready skipping
+1759939038.551819 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.552088 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.memoization:222 check_memo DEBUG: Task 26 will not be memoized
+1759939038.552387 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:767 launch_task INFO: Parsl task 26 try 0 launched on executor threads
+1759939038.552821 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 26 will not be redirected.
+1759939038.553104 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 26 will not be redirected.
+1759939038.553385 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.553647 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 25 is not pending, so launch_if_ready skipping
+1759939038.553836 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.555050 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 25 is not pending, so launch_if_ready skipping
+1759939038.555258 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.555496 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 25 is not pending, so launch_if_ready skipping
+1759939038.555725 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.555973 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.dataflow.dflow:651 _launch_if_ready_async DEBUG: Task 26 is not pending, so launch_if_ready skipping
+1759939038.556229 2025-10-08 12:57:18 MainProcess-206991 Dependency-Launch_0-140065742730816 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1759939038.558809 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:588 _complete_task INFO: Task 26 completed (launched -> exec_done)
+1759939038.559028 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard out for task 26 will not be redirected.
+1759939038.559496 2025-10-08 12:57:18 MainProcess-206991 ThreadPoolExecutor-0_1-140065653122624 parsl.dataflow.dflow:1411 log_std_stream INFO: Standard error for task 26 will not be redirected.
+1759939038.559812 2025-10-08 12:57:18 MainProcess-206991 MainThread-140066196169856 parsl.dataflow.dflow:1160 atexit_cleanup WARNING: Python is exiting with a DFK still running. You should call parsl.dfk().cleanup() before exiting to release any resources

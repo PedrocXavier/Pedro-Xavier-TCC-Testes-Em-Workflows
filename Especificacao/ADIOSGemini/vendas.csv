@@ -1,0 +1,11 @@
+produto_id,categoria,preco,quantidade,data_venda
+P001,Eletronicos,1200.00,1,2024-10-01
+P002,Vestuario,89.50,3,2024-10-01
+P003,Eletronicos,450.00,2,2024-10-02
+P004,Casa,25.99,10,2024-10-02
+P005,Vestuario,150.00,1,2024-10-03
+P006,Vestuario,50.00,5,2024-10-03
+P007,Casa,320.00,2,2024-10-04
+P008,Eletronicos,2000.00,1,2024-10-04
+P009,Casa,10.00,20,2024-10-05
+P010,Eletronicos,750.00,3,2024-10-05

@@ -1,0 +1,35 @@
+2025-07-18 03:28:08.901 parsl:951 26801 MainThread [INFO]  
+  Python version: 3.10.12 (main, Feb  4 2025, 14:57:36) [GCC 11.4.0]
+  Debug logging: False
+  Certificates dir: None
+  Log dir: /mnt/c/Users/pedro/Pedro/TCC/ParslGemini/runinfo/002/htex_local
+  Manager ID: 5f42406da74f
+  Block ID: 0
+  cores_per_worker: 1.0
+  mem_per_worker: None
+  Interchange port: 54127
+  addresses: 127.0.0.1,127.0.1.1,179.137.197.113,172.27.45.194
+  max_workers_per_node: inf
+  poll_period: 10
+  address_probe_timeout: 30
+  Prefetch capacity: 0
+  Heartbeat threshold: 120
+  Heartbeat period: 30
+  Drain period: None
+  CPU affinity: none
+  Accelerators: 
+  enable_mpi_mode: False
+  mpi_launcher: mpiexec
+2025-07-18 03:28:08.901 parsl:153 26801 MainThread [INFO]  Manager initializing
+2025-07-18 03:28:08.905 parsl:173 26801 MainThread [INFO]  Probe discovered interchange url: tcp://127.0.0.1:54127
+2025-07-18 03:28:10.901 parsl:246 26801 MainThread [INFO]  Manager will spawn 8 workers
+2025-07-18 03:28:10.913 parsl:296 26801 Interchange-Communicator [INFO]  starting
+2025-07-18 03:28:10.913 parsl:524 26801 MainThread [INFO]  Manager threads started
+2025-07-18 03:28:10.915 parsl:309 26801 Interchange-Communicator [INFO]  Manager task pipe connected to interchange
+2025-07-18 03:28:10.920 parsl:321 26801 Interchange-Communicator [INFO]  Successfully connected to interchange via URL: tcp://127.0.0.1:54127
+2025-07-18 10:47:11.195 parsl:402 26801 Interchange-Communicator [CRITICAL]  Missing contact with interchange beyond heartbeat_threshold
+2025-07-18 10:47:11.198 parsl:404 26801 Interchange-Communicator [CRITICAL]  Exiting
+2025-07-18 10:47:11.199 parsl:528 26801 MainThread [INFO]  Stop event set; terminating worker processes
+2025-07-18 10:47:11.200 parsl:408 26801 Interchange-Communicator [INFO]  Exiting
+2025-07-18 10:47:11.264 parsl:570 26801 MainThread [INFO]  process_worker_pool ran for 26342.361380577087 seconds
+2025-07-18 10:47:11.265 parsl:1002 26801 MainThread [INFO]  Process worker pool exiting normally

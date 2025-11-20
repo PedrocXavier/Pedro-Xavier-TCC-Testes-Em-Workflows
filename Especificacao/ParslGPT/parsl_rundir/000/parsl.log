@@ -1,0 +1,170 @@
+1752817524.344575 2025-07-18 02:45:24 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:97 __init__ INFO: Starting DataFlowKernel with config
+Config(
+    app_cache=True, 
+    checkpoint_files=None, 
+    checkpoint_mode='task_exit', 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(ThreadPoolExecutor(
+        label='local_threads', 
+        max_threads=4, 
+        remote_monitoring_radio=<parsl.monitoring.radios.multiprocessing.MultiprocessingQueueRadio object at 0x77cc325432b0>, 
+        storage_access=None, 
+        thread_name_prefix='', 
+        working_dir=None
+    ), HighThroughputExecutor(
+        address=None, 
+        address_probe_timeout=None, 
+        available_accelerators=[], 
+        block_error_handler=<function simple_error_handler at 0x77cc34f3a170>, 
+        cores_per_worker=1, 
+        cpu_affinity='none', 
+        drain_period=None, 
+        encrypted=False, 
+        heartbeat_period=30, 
+        heartbeat_threshold=120, 
+        interchange_launch_cmd=['interchange.py'], 
+        interchange_port_range=(55000, 56000), 
+        label='local_htex', 
+        launch_cmd='process_worker_pool.py {debug} {max_workers_per_node} -a {addresses} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --port={worker_port} --cert_dir {cert_dir} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} {address_probe_timeout_string} --hb_threshold={heartbeat_threshold} --drain_period={drain_period} --cpu-affinity {cpu_affinity} {enable_mpi_mode} --mpi-launcher={mpi_launcher} --available-accelerators {accelerators}', 
+        loopback_address='127.0.0.1', 
+        manager_selector=<parsl.executors.high_throughput.manager_selector.RandomManagerSelector object at 0x77cc34f2b5e0>, 
+        max_workers_per_node=inf, 
+        mem_per_worker=None, 
+        poll_period=10, 
+        prefetch_capacity=0, 
+        provider=LocalProvider(
+            cmd_timeout=30, 
+            init_blocks=1, 
+            launcher=SingleNodeLauncher(debug=True, fail_on_any=False), 
+            max_blocks=1, 
+            min_blocks=0, 
+            nodes_per_block=1, 
+            parallelism=1, 
+            worker_init=''
+        ), 
+        remote_monitoring_radio=<parsl.monitoring.radios.htex.HTEXRadio object at 0x77cc1c749cc0>, 
+        storage_access=None, 
+        worker_debug=False, 
+        worker_logdir_root=None, 
+        worker_port=None, 
+        worker_port_range=(54000, 55000), 
+        working_dir=None
+    )), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=True, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=2, 
+    retry_handler=None, 
+    run_dir='parsl_rundir', 
+    std_autopath=None, 
+    strategy=None, 
+    strategy_period=5, 
+    usage_tracking=True
+)
+1752817524.345076 2025-07-18 02:45:24 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:99 __init__ INFO: Parsl version: 2025.07.14
+1752817524.345292 2025-07-18 02:45:24 MainProcess-19355 MainThread-131718976065984 parsl.usage_tracking.usage:119 __init__ DEBUG: Tracking level: True
+1752817524.345424 2025-07-18 02:45:24 MainProcess-19355 MainThread-131718976065984 parsl.usage_tracking.usage:216 send_start_message INFO: Sending start message for usage tracking
+1752817524.345555 2025-07-18 02:45:24 MainProcess-19355 MainThread-131718976065984 parsl.usage_tracking.usage:167 construct_start_message DEBUG: Usage tracking start message: {'correlator': 'fbb3ba9a-eb45-4dae-8a44-ea032c1ce0fb', 'parsl_v': '2025.07.14', 'python_v': '3.10.12', 'platform.system': 'Linux', 'tracking_level': 1}
+1752817524.352229 2025-07-18 02:45:24 MainProcess-19355 MainThread-131718976065984 parsl.usage_tracking.usage:212 send_UDP_message DEBUG: Usage tracking failed: Can't pickle <function udp_messenger at 0x77cc34dda950>: it's not the same object as parsl.usage_tracking.usage.udp_messenger
+1752817524.352570 2025-07-18 02:45:24 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:124 __init__ INFO: Run id is: c4e0ead5-0c2b-4d1b-9506-481df8e266ff
+1752817526.668624 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:131 __init__ DEBUG: Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/parsl_env/lib/python3.10/site-packages/parsl/dataflow/dflow.py
+1752817526.668813 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:131 __init__ DEBUG: Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/parsl_env/lib/python3.10/site-packages/parsl/dataflow/dflow.py
+1752817526.668962 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:131 __init__ DEBUG: Considering candidate for workflow name: /mnt/c/Users/pedro/Pedro/TCC/ParslGPT/ParslWorkflowGPT.py
+1752817526.669076 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:137 __init__ DEBUG: Using ParslWorkflowGPT.py as workflow name
+1752817526.670346 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.memoization:169 __init__ INFO: App caching initialized
+1752817526.670530 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.jobs.strategy:145 __init__ DEBUG: Scaling strategy: None
+1752817526.675129 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.executor:603 _start_result_queue_thread DEBUG: Starting result queue thread
+1752817526.675475 2025-07-18 02:45:26 MainProcess-19355 HTEX-Result-Queue-Thread-131718317073984 parsl.executors.high_throughput.executor:478 _result_queue_worker DEBUG: Result queue worker starting
+1752817526.675548 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.executor:607 _start_result_queue_thread DEBUG: Started result queue thread: <Thread(HTEX-Result-Queue-Thread, started daemon 131718317073984)>
+1752817526.677902 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.executor:579 _start_local_interchange_process DEBUG: Popened interchange process. Writing config object
+1752817526.678099 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.executor:583 _start_local_interchange_process DEBUG: Sent config object. Requesting worker ports
+1752817526.678246 2025-07-18 02:45:26 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.zmq_pipes:79 run DEBUG: Sending command client command
+1752817528.680970 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.zmq_pipes:94 run DEBUG: Polling for command client response or timeout
+1752817528.681453 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.zmq_pipes:106 run DEBUG: Receiving command client response
+1752817528.681663 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.zmq_pipes:108 run DEBUG: Received command client response
+1752817528.681792 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.executor:589 _start_local_interchange_process DEBUG: Interchange process started (<Popen: returncode: None args: ['interchange.py']>).  Worker port: 54272
+1752817528.681956 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.executor:416 initialize_scaling DEBUG: Launch command: process_worker_pool.py   -a 179.137.197.113,127.0.1.1,172.27.45.194,127.0.0.1 -p 0 -c 1 -m None --poll 10 --port=54272 --cert_dir None --logdir=/mnt/c/Users/pedro/Pedro/TCC/ParslGPT/parsl_rundir/000/local_htex --block_id={block_id} --hb_period=30  --hb_threshold=120 --drain_period=None --cpu-affinity none  --mpi-launcher=mpiexec --available-accelerators 
+1752817528.682112 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.executors.high_throughput.executor:418 initialize_scaling DEBUG: Starting HighThroughputExecutor with provider:
+LocalProvider(
+    cmd_timeout=30, 
+    init_blocks=1, 
+    launcher=SingleNodeLauncher(debug=True, fail_on_any=False), 
+    max_blocks=1, 
+    min_blocks=0, 
+    nodes_per_block=1, 
+    parallelism=1, 
+    worker_init=''
+)
+1752817528.682545 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.jobs.job_status_poller:35 add_executors DEBUG: Adding executor local_htex
+1752817528.716778 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1003 submit DEBUG: Task 0 will be sent to executor local_htex
+1752817528.717092 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:811 _add_output_deps DEBUG: Adding output dependencies
+1752817528.717279 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1054 submit DEBUG: Added output dependencies
+1752817528.717412 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1067 submit DEBUG: Gathering dependencies
+1752817528.717584 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1070 submit DEBUG: Gathered dependencies
+1752817528.717709 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1082 submit INFO: Task 0 submitted for App calcular_estatisticas, not waiting on any dependency
+1752817528.717844 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1088 submit DEBUG: Task 0 set to pending state with AppFuture: <AppFuture at 0x77cc1c7482b0 state=pending>
+1752817528.718265 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.memoization:228 check_memo DEBUG: Task 0 will not be memoized
+1752817528.718431 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1003 submit DEBUG: Task 1 will be sent to executor local_threads
+1752817528.718529 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.executors.high_throughput.executor:698 submit DEBUG: Pushing function <function calcular_estatisticas at 0x77cc1c7bca60> to queue with args ("b'\\x80\\x04\\x95\\xbc\\x04\\x00\\x00\\x00\\x00\\x00\\x00\\x8c\\x11pandas.core.frame\\x94\\x8c\\tDataFrame\\x94\\x93\\x...", "'A'", "'resultados'")
+1752817528.718727 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:811 _add_output_deps DEBUG: Adding output dependencies
+1752817528.719643 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1054 submit DEBUG: Added output dependencies
+1752817528.719797 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1067 submit DEBUG: Gathering dependencies
+1752817528.719956 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1070 submit DEBUG: Gathered dependencies
+1752817528.720092 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1082 submit INFO: Task 1 submitted for App calcular_estatisticas, not waiting on any dependency
+1752817528.720256 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1088 submit DEBUG: Task 1 set to pending state with AppFuture: <AppFuture at 0x77cc1c748130 state=pending>
+1752817528.720553 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1003 submit DEBUG: Task 2 will be sent to executor local_threads
+1752817528.720740 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:811 _add_output_deps DEBUG: Adding output dependencies
+1752817528.720904 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1054 submit DEBUG: Added output dependencies
+1752817528.721050 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1067 submit DEBUG: Gathering dependencies
+1752817528.721182 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1070 submit DEBUG: Gathered dependencies
+1752817528.721332 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1082 submit INFO: Task 2 submitted for App calcular_estatisticas, not waiting on any dependency
+1752817528.721491 2025-07-18 02:45:28 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1088 submit DEBUG: Task 2 set to pending state with AppFuture: <AppFuture at 0x77cc1c748610 state=pending>
+1752817528.724738 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.executors.high_throughput.zmq_pipes:170 put DEBUG: Sending TasksOutgoing message
+1752817528.724978 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.executors.high_throughput.zmq_pipes:172 put DEBUG: Sent TasksOutgoing message
+1752817528.725141 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:764 launch_task INFO: Parsl task 0 try 0 launched on executor local_htex with executor id 1
+1752817528.725274 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard out for task 0 will not be redirected.
+1752817528.725390 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard error for task 0 will not be redirected.
+1752817528.725502 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1752817528.725637 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.memoization:228 check_memo DEBUG: Task 1 will not be memoized
+1752817528.728006 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:769 launch_task INFO: Parsl task 1 try 0 launched on executor local_threads
+1752817528.728152 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard out for task 1 will not be redirected.
+1752817528.728286 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard error for task 1 will not be redirected.
+1752817528.728435 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1752817528.728615 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.memoization:228 check_memo DEBUG: Task 2 will not be memoized
+1752817528.729908 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:769 launch_task INFO: Parsl task 2 try 0 launched on executor local_threads
+1752817528.730149 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard out for task 2 will not be redirected.
+1752817528.730278 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard error for task 2 will not be redirected.
+1752817528.730430 2025-07-18 02:45:28 MainProcess-19355 Dependency-Launch_0-131718308681280 parsl.process_loggers:27 wrapped DEBUG: Normal ending for _launch_if_ready_async on thread Dependency-Launch_0
+1752817528.737899 2025-07-18 02:45:28 MainProcess-19355 ThreadPoolExecutor-0_0-131718300288576 parsl.dataflow.dflow:588 _complete_task INFO: Task 1 completed (launched -> exec_done)
+1752817528.738498 2025-07-18 02:45:28 MainProcess-19355 ThreadPoolExecutor-0_1-131718291895872 parsl.dataflow.dflow:588 _complete_task INFO: Task 2 completed (launched -> exec_done)
+1752817528.740717 2025-07-18 02:45:28 MainProcess-19355 ThreadPoolExecutor-0_0-131718300288576 parsl.dataflow.dflow:1318 checkpoint WARNING: No tasks checkpointed so far in this run. Please ensure caching is enabled
+1752817528.740906 2025-07-18 02:45:28 MainProcess-19355 ThreadPoolExecutor-0_0-131718300288576 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard out for task 1 will not be redirected.
+1752817528.741111 2025-07-18 02:45:28 MainProcess-19355 ThreadPoolExecutor-0_0-131718300288576 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard error for task 1 will not be redirected.
+1752817528.742527 2025-07-18 02:45:28 MainProcess-19355 ThreadPoolExecutor-0_1-131718291895872 parsl.dataflow.dflow:1318 checkpoint WARNING: No tasks checkpointed so far in this run. Please ensure caching is enabled
+1752817528.742680 2025-07-18 02:45:28 MainProcess-19355 ThreadPoolExecutor-0_1-131718291895872 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard out for task 2 will not be redirected.
+1752817528.742792 2025-07-18 02:45:28 MainProcess-19355 ThreadPoolExecutor-0_1-131718291895872 parsl.dataflow.dflow:1332 log_std_stream INFO: Standard error for task 2 will not be redirected.
+1752817531.671328 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.high_throughput.zmq_pipes:79 run DEBUG: Sending command client command
+1752817531.672298 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.high_throughput.zmq_pipes:106 run DEBUG: Receiving command client response
+1752817531.672910 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.high_throughput.zmq_pipes:108 run DEBUG: Received command client response
+1752817531.673398 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.jobs.strategy:156 _strategy_init_only DEBUG: strategy_init_only: scaling out 1 initial blocks for local_htex
+1752817531.674022 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.status_handling:200 scale_out_facade INFO: Scaling out by 1 blocks
+1752817531.674468 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.status_handling:203 scale_out_facade INFO: Allocated block ID 0
+1752817531.674897 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.status_handling:258 _launch_block DEBUG: Submitting to provider with job_name parsl.local_htex.block-0
+1752817531.679764 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.providers.local.local:207 submit DEBUG: Launching
+1752817531.680067 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.utils:478 execute_wait DEBUG: Creating process with command '/bin/bash -c 'echo - >/mnt/c/Users/pedro/Pedro/TCC/ParslGPT/parsl_rundir/000/submit_scripts/parsl.local_htex.block-0.1752817531.6753376.sh.ec && { { bash /mnt/c/Users/pedro/Pedro/TCC/ParslGPT/parsl_rundir/000/submit_scripts/parsl.local_htex.block-0.1752817531.6753376.sh 1>/mnt/c/Users/pedro/Pedro/TCC/ParslGPT/parsl_rundir/000/submit_scripts/parsl.local_htex.block-0.1752817531.6753376.sh.out 2>/mnt/c/Users/pedro/Pedro/TCC/ParslGPT/parsl_rundir/000/submit_scripts/parsl.local_htex.block-0.1752817531.6753376.sh.err ; echo $? > /mnt/c/Users/pedro/Pedro/TCC/ParslGPT/parsl_rundir/000/submit_scripts/parsl.local_htex.block-0.1752817531.6753376.sh.ec ; } >/dev/null 2>&1 & echo "PID:$!" ; }''
+1752817531.683846 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.utils:486 execute_wait DEBUG: Created process with pid 19432. Performing communicate
+1752817531.694106 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.utils:489 execute_wait DEBUG: Process 19432 returned 0
+1752817531.694416 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.utils:495 execute_wait DEBUG: Execution of command in process 19432 completed normally
+1752817531.694704 2025-07-18 02:45:31 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.status_handling:261 _launch_block DEBUG: Launched block 0 on executor local_htex with job ID 19434
+1752817536.697703 2025-07-18 02:45:36 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.high_throughput.zmq_pipes:79 run DEBUG: Sending command client command
+1752817536.698373 2025-07-18 02:45:36 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.high_throughput.zmq_pipes:106 run DEBUG: Receiving command client response
+1752817536.698723 2025-07-18 02:45:36 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.executors.high_throughput.zmq_pipes:108 run DEBUG: Received command client response
+1752817536.699147 2025-07-18 02:45:36 MainProcess-19355 JobStatusPoller-Timer-Thread-131718534446048-131718579197504 parsl.jobs.strategy:160 _strategy_init_only DEBUG: strategy_init_only: doing nothing
+1752817540.139136 2025-07-18 02:45:40 MainProcess-19355 HTEX-Result-Queue-Thread-131718317073984 parsl.executors.high_throughput.zmq_pipes:219 get DEBUG: Received ResultsIncoming message
+1752817540.139469 2025-07-18 02:45:40 MainProcess-19355 HTEX-Result-Queue-Thread-131718317073984 parsl.dataflow.dflow:588 _complete_task INFO: Task 0 completed (launched -> exec_done)
+1752817540.140222 2025-07-18 02:45:40 MainProcess-19355 MainThread-131718976065984 parsl.dataflow.dflow:1157 atexit_cleanup WARNING: Python is exiting with a DFK still running. You should call parsl.dfk().cleanup() before exiting to release any resources

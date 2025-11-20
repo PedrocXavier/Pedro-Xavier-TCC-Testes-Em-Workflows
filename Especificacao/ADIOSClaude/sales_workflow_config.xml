@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<adios-config>
+    <!-- Configuração do Engine de I/O -->
+    <io name="SalesAnalysisIO">
+        <!-- Engine para leitura do dataset -->
+        <engine type="BP4">
+            <parameter key="Profile" value="On"/>
+            <parameter key="ProfileUnits" value="Microseconds"/>
+            <parameter key="Threads" value="4"/>
+        </engine>
+        
+        <!-- Variáveis de entrada -->
+        <variable name="produto_id" type="string" shape="GlobalBounds"/>
+        <variable name="categoria" type="string" shape="GlobalBounds"/>
+        <variable name="preco" type="double" shape="GlobalBounds"/>
+        <variable name="quantidade" type="int32" shape="GlobalBounds"/>
+        <variable name="data_venda" type="string" shape="GlobalBounds"/>
+        
+        <!-- Variáveis de saída - Agregações por categoria -->
+        <variable name="categoria_nome" type="string" shape="GlobalBounds"/>
+        <variable name="media_preco" type="double" shape="GlobalBounds"/>
+        <variable name="desvio_padrao_preco" type="double" shape="GlobalBounds"/>
+        <variable name="total_unidades" type="int64" shape="GlobalBounds"/>
+        <variable name="receita_total" type="double" shape="GlobalBounds"/>
+        
+        <!-- Transforms para processamento paralelo -->
+        <transform type="GroupBy">
+            <parameter key="GroupColumn" value="categoria"/>
+            <parameter key="Operations" value="mean,std,sum,count"/>
+            <parameter key="Columns" value="preco,quantidade"/>
+            <parameter key="OutputPrefix" value="categoria_"/>
+        </transform>
+        
+        <transform type="Aggregate">
+            <parameter key="Type" value="Statistics"/>
+            <parameter key="ParallelExecution" value="true"/>
+            <parameter key="ThreadPool" value="4"/>
+        </transform>
+    </io>
+    
+    <!-- Configuração do Workflow -->
+    <workflow name="SalesAnalysisWorkflow">
+        <!-- Estágio 1: Leitura dos dados -->
+        <stage name="DataIngestion">
+            <io ref="SalesAnalysisIO"/>
+            <reader name="SalesDataReader">
+                <parameter key="FileName" value="sales_data.bp"/>
+                <parameter key="ReadMode" value="Streaming"/>
+            </reader>
+        </stage>
+        
+        <!-- Estágio 2: Agrupamento por categoria -->
+        <stage name="CategoryGrouping" depends="DataIngestion">
+            <io ref="SalesAnalysisIO"/>
+            <processor name="GroupByCategory">
+                <parameter key="GroupByColumn" value="categoria"/>
+                <parameter key="ParallelProcessing" value="true"/>
+                <parameter key="MaxParallelGroups" value="8"/>
+            </processor>
+        </stage>
+        
+        <!-- Estágio 3: Cálculos paralelos por categoria -->
+        <stage name="ParallelCalculations" depends="CategoryGrouping">
+            <io ref="SalesAnalysisIO"/>
+            
+            <!-- Processo paralelo 1: Estatísticas de preço -->
+            <processor name="PriceStatistics" parallel="true">
+                <parameter key="Operation" value="MeanStd"/>
+                <parameter key="Column" value="preco"/>
+                <parameter key="OutputVars" value="media_preco,desvio_padrao_preco"/>
+            </processor>
+            
+            <!-- Processo paralelo 2: Total de unidades -->
+            <processor name="UnitsTotal" parallel="true">
+                <parameter key="Operation" value="Sum"/>
+                <parameter key="Column" value="quantidade"/>
+                <parameter key="OutputVar" value="total_unidades"/>
+            </processor>
+            
+            <!-- Processo paralelo 3: Receita total -->
+            <processor name="RevenueTotal" parallel="true">
+                <parameter key="Operation" value="Sum"/>
+                <parameter key="Formula" value="preco * quantidade"/>
+                <parameter key="OutputVar" value="receita_total"/>
+            </processor>
+        </stage>
+        
+        <!-- Estágio 4: Exportação para CSV por categoria -->
+        <stage name="CSVExport" depends="ParallelCalculations">
+            <io ref="SalesAnalysisIO"/>
+            <writer name="CategoryCSVWriter">
+                <parameter key="OutputFormat" value="CSV"/>
+                <parameter key="SeparateFilePerGroup" value="true"/>
+                <parameter key="FileNamePattern" value="categoria_{categoria_nome}_analytics.csv"/>
+                <parameter key="Headers" value="categoria,media_preco,desvio_padrao_preco,total_unidades,receita_total"/>
+                <parameter key="Delimiter" value=","/>
+                <parameter key="Precision" value="2"/>
+            </writer>
+        </stage>
+    </workflow>
+    
+    <!-- Configuração de Execução -->
+    <execution>
+        <parameter key="WorkflowName" value="SalesAnalysisWorkflow"/>
+        <parameter key="ExecutionMode" value="Parallel"/>
+        <parameter key="MaxConcurrentStages" value="4"/>
+        <parameter key="ResourceAllocation" value="Optimal"/>
+        
+        <!-- Configuração de logging -->
+        <logging>
+            <parameter key="Level" value="INFO"/>
+            <parameter key="OutputFile" value="sales_workflow.log"/>
+            <parameter key="Performance" value="true"/>
+        </logging>
+        
+        <!-- Configuração de cache -->
+        <cache>
+            <parameter key="EnableCache" value="true"/>
+            <parameter key="CacheSize" value="1GB"/>
+            <parameter key="CachePolicy" value="LRU"/>
+        </cache>
+        
+        <!-- Configuração de erro e recuperação -->
+        <error-handling>
+            <parameter key="OnError" value="Continue"/>
+            <parameter key="RetryCount" value="3"/>
+            <parameter key="CheckpointInterval" value="1000"/>
+        </error-handling>
+    </execution>
+    
+    <!-- Configuração de Performance -->
+    <performance>
+        <parameter key="BufferSize" value="64MB"/>
+        <parameter key="CompressionLevel" value="1"/>
+        <parameter key="AsyncIO" value="true"/>
+        <parameter key="PrefetchSize" value="10"/>
+    </performance>
+    
+    <!-- Configuração de Monitoramento -->
+    <monitoring>
+        <parameter key="EnableProfiling" value="true"/>
+        <parameter key="MemoryTracking" value="true"/>
+        <parameter key="CPUTracking" value="true"/>
+        <parameter key="IOTracking" value="true"/>
+        <parameter key="MetricsOutput" value="metrics.json"/>
+    </monitoring>
+</adios-config>

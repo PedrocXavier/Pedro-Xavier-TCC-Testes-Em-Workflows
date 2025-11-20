@@ -1,0 +1,19 @@
+2025-07-18 11:35:42,368 - INFO - Processador inicializado com configuração: sales_workflow_config.xml
+2025-07-18 11:35:42,368 - INFO - === Iniciando Workflow de Análise de Vendas ===
+2025-07-18 11:35:42,368 - INFO - Etapa 1: Carregando dados
+2025-07-18 11:35:42,369 - INFO - Criando dataset sintético de exemplo
+2025-07-18 11:35:42,469 - INFO - Dataset sintético salvo em: sales_data.csv
+2025-07-18 11:35:42,469 - INFO - Etapa 2: Preparando dados para ADIOS2
+2025-07-18 11:35:42,469 - INFO - Escrevendo dados de entrada para: sales_data.bp
+2025-07-18 11:35:42,470 - ERROR - Erro no workflow: 'IO' object has no attribute 'Open'
+2025-07-18 11:35:42,470 - ERROR - Erro na execução: 'IO' object has no attribute 'Open'
+2025-07-18 11:35:42,470 - INFO - Limpando recursos
+2025-07-18 11:37:45,498 - INFO - Processador inicializado com configuração: sales_workflow_config.xml
+2025-07-18 11:37:45,498 - INFO - === Iniciando Workflow de Análise de Vendas ===
+2025-07-18 11:37:45,498 - INFO - Etapa 1: Carregando dados
+2025-07-18 11:37:45,499 - INFO - Carregando dados de: sales_data.csv
+2025-07-18 11:37:45,532 - INFO - Etapa 2: Preparando dados para ADIOS2
+2025-07-18 11:37:45,532 - INFO - Escrevendo dados de entrada para: sales_data.bp
+2025-07-18 11:37:45,532 - ERROR - Erro no workflow: 'IO' object has no attribute 'Open'
+2025-07-18 11:37:45,533 - ERROR - Erro na execução: 'IO' object has no attribute 'Open'
+2025-07-18 11:37:45,533 - INFO - Limpando recursos

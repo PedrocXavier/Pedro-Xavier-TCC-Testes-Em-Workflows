@@ -1,0 +1,4 @@
+2025-07-18 03:20:52.652 worker_log:650 24700 MainThread [INFO]  Worker 1 started
+2025-07-18 03:20:52.654 worker_log:763 24700 MainThread [INFO]  Received executor task 1
+2025-07-18 03:20:54.518 worker_log:781 24700 MainThread [INFO]  Completed executor task 1
+2025-07-18 03:20:54.519 worker_log:792 24700 MainThread [INFO]  All processing finished for executor task 1
