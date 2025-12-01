@@ -7,7 +7,7 @@ import sys
 import parsl
 from parsl.config import Config
 from parsl.executors import ThreadPoolExecutor
-from parsl.decorators import python_app
+from parsl import python_app
 from parsl.dataflow.futures import Future
 
 from sklearn.metrics import pairwise_distances

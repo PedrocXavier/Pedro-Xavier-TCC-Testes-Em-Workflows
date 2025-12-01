@@ -16,6 +16,7 @@ def generate_random_bp_files():
 
         # Escrevendo um único inteiro no arquivo BP
         #  with adios2.open(fname, "w") as fh: Linha incorreta original
+        adios = adios.Adios()
         with adios.open(fname, "w") as fh:
             fh.write("value", value)
 

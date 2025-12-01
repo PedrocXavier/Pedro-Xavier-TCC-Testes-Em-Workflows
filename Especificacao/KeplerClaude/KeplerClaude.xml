@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow name="AnáliseVendasVarejo" version="1.0">
+  
+  <!-- DESCRIÇÃO DO WORKFLOW -->
+  <description>
+    Workflow para análise de dados de vendas no varejo.
+    Agrupa por categoria e calcula métricas em paralelo:
+    - Média e desvio padrão de preço
+    - Total de unidades vendidas
+    - Receita total
+    Salva cada categoria em arquivo CSV separado.
+  </description>
+
+  <!-- ATORES (ACTORS) -->
+  <actors>
+    
+    <!-- Ator para leitura do CSV -->
+    <actor id="1" name="CSVReader" class="org.kepler.actor.io.CSVReader">
+      <property name="fileOrURL" value="vendas.csv"/>
+      <property name="separator" value=","/>
+      <property name="header" value="true"/>
+      <property name="output_format" value="row-wise"/>
+      <display x="100" y="200"/>
+    </actor>
+
+    <!-- Ator para agrupar por categoria -->
+    <actor id="2" name="GroupByCategoria" class="org.kepler.actor.data.GroupBy">
+      <property name="groupByColumn" value="categoria"/>
+      <property name="outputFormat" value="separate_groups"/>
+      <display x="250" y="200"/>
+    </actor>
+
+    <!-- BRANCH PARALELO 1: Estatísticas de Preço -->
+    <actor id="3" name="CalculaEstatisticasPreco" class="org.kepler.actor.python.PythonScript">
+      <property name="script">
+import pandas as pd
+import numpy as np
+
+# Recebe dados do grupo
+df = pd.DataFrame(input_data)
+
+# Converte tipos
+df['preco'] = pd.to_numeric(df['preco'], errors='coerce')
+
+# Calcula estatísticas
+categoria = df['categoria'].iloc[0]
+media_preco = df['preco'].mean()
+desvio_preco = df['preco'].std()
+
+# Prepara saída
+resultado = {
+    'categoria': categoria,
+    'media_preco': round(media_preco, 2),
+    'desvio_padrao_preco': round(desvio_preco, 2)
+}
+
+output = resultado
+      </property>
+      <display x="400" y="100"/>
+    </actor>
+
+    <!-- BRANCH PARALELO 2: Total de Unidades -->
+    <actor id="4" name="CalculaTotalUnidades" class="org.kepler.actor.python.PythonScript">
+      <property name="script">
+import pandas as pd
+
+# Recebe dados do grupo
+df = pd.DataFrame(input_data)
+
+# Converte tipos
+df['quantidade'] = pd.to_numeric(df['quantidade'], errors='coerce')
+
+# Calcula total
+categoria = df['categoria'].iloc[0]
+total_unidades = df['quantidade'].sum()
+
+# Prepara saída
+resultado = {
+    'categoria': categoria,
+    'total_unidades': int(total_unidades)
+}
+
+output = resultado
+      </property>
+      <display x="400" y="200"/>
+    </actor>
+
+    <!-- BRANCH PARALELO 3: Receita Total -->
+    <actor id="5" name="CalculaReceitaTotal" class="org.kepler.actor.python.PythonScript">
+      <property name="script">
+import pandas as pd
+
+# Recebe dados do grupo
+df = pd.DataFrame(input_data)
+
+# Converte tipos
+df['preco'] = pd.to_numeric(df['preco'], errors='coerce')
+df['quantidade'] = pd.to_numeric(df['quantidade'], errors='coerce')
+
+# Calcula receita
+df['receita'] = df['preco'] * df['quantidade']
+categoria = df['categoria'].iloc[0]
+receita_total = df['receita'].sum()
+
+# Prepara saída
+resultado = {
+    'categoria': categoria,
+    'receita_total': round(receita_total, 2)
+}
+
+output = resultado
+      </property>
+      <display x="400" y="300"/>
+    </actor>
+
+    <!-- Ator para combinar resultados paralelos -->
+    <actor id="6" name="CombinarResultados" class="org.kepler.actor.data.RecordMerger">
+      <property name="mergeKey" value="categoria"/>
+      <property name="waitForAll" value="true"/>
+      <display x="550" y="200"/>
+    </actor>
+
+    <!-- Ator para formatar dados finais -->
+    <actor id="7" name="FormatarDadosFinais" class="org.kepler.actor.python.PythonScript">
+      <property name="script">
+import pandas as pd
+
+# Recebe dados combinados
+dados = input_data
+
+# Cria DataFrame formatado
+df_final = pd.DataFrame([{
+    'Categoria': dados['categoria'],
+    'Média de Preço (R$)': dados['media_preco'],
+    'Desvio Padrão Preço (R$)': dados['desvio_padrao_preco'],
+    'Total de Unidades': dados['total_unidades'],
+    'Receita Total (R$)': dados['receita_total']
+}])
+
+output = {
+    'categoria': dados['categoria'],
+    'dataframe': df_final
+}
+      </property>
+      <display x="700" y="200"/>
+    </actor>
+
+    <!-- Ator para salvar CSV por categoria -->
+    <actor id="8" name="SalvarCSVPorCategoria" class="org.kepler.actor.python.PythonScript">
+      <property name="script">
+import pandas as pd
+import os
+
+# Recebe dados
+dados = input_data
+categoria = dados['categoria']
+df = dados['dataframe']
+
+# Cria nome do arquivo
+# Remove caracteres especiais do nome da categoria
+categoria_limpa = "".join(c for c in categoria if c.isalnum() or c in (' ', '-', '_')).rstrip()
+categoria_limpa = categoria_limpa.replace(' ', '_')
+filename = f"vendas_categoria_{categoria_limpa}.csv"
+
+# Salva CSV
+df.to_csv(filename, index=False, encoding='utf-8')
+
+output = f"Arquivo salvo: {filename}"
+      </property>
+      <display x="850" y="200"/>
+    </actor>
+
+    <!-- Ator para exibir mensagens de sucesso -->
+    <actor id="9" name="Display" class="org.kepler.actor.gui.Display">
+      <property name="title" value="Status de Processamento"/>
+      <display x="1000" y="200"/>
+    </actor>
+
+  </actors>
+
+  <!-- CONEXÕES (CONNECTIONS) -->
+  <connections>
+    
+    <!-- Fluxo principal: Leitura -> Agrupamento -->
+    <connection source="1" sourcePort="output" target="2" targetPort="input"/>
+    
+    <!-- Agrupamento -> Processamento Paralelo (3 branches) -->
+    <connection source="2" sourcePort="grouped_output" target="3" targetPort="input"/>
+    <connection source="2" sourcePort="grouped_output" target="4" targetPort="input"/>
+    <connection source="2" sourcePort="grouped_output" target="5" targetPort="input"/>
+    
+    <!-- Processamento Paralelo -> Combinar -->
+    <connection source="3" sourcePort="output" target="6" targetPort="input1"/>
+    <connection source="4" sourcePort="output" target="6" targetPort="input2"/>
+    <connection source="5" sourcePort="output" target="6" targetPort="input3"/>
+    
+    <!-- Combinar -> Formatar -> Salvar -> Display -->
+    <connection source="6" sourcePort="merged_output" target="7" targetPort="input"/>
+    <connection source="7" sourcePort="output" target="8" targetPort="input"/>
+    <connection source="8" sourcePort="output" target="9" targetPort="input"/>
+    
+  </connections>
+
+  <!-- DIRECTOR (Controle de Execução) -->
+  <director class="org.kepler.sdf.SDFDirector">
+    <property name="iterations" value="0"/>
+    <property name="synchronizeToRealTime" value="false"/>
+  </director>
+
+  <!-- PARÂMETROS GLOBAIS -->
+  <parameters>
+    <parameter name="InputFile" value="vendas.csv" class="ptolemy.data.expr.StringParameter"/>
+    <parameter name="OutputDirectory" value="./" class="ptolemy.data.expr.StringParameter"/>
+  </parameters>
+
+  <!-- DOCUMENTAÇÃO -->
+  <documentation>
+    <author>Sistema de Análise de Vendas</author>
+    <version>1.0</version>
+    <created>2024</created>
+    
+    <usage>
+      INSTRUÇÕES DE USO:
+      
+      1. PREPARAÇÃO:
+         - Coloque o arquivo 'vendas.csv' no diretório do workflow
+         - Formato esperado: produto_id,categoria,preco,quantidade,data_venda
+      
+      2. EXECUÇÃO:
+         - Abra o workflow no Kepler
+         - Clique em "Run" (ou pressione Ctrl+R)
+      
+      3. SAÍDA:
+         - Arquivos gerados: vendas_categoria_[NOME_CATEGORIA].csv
+         - Cada arquivo contém as métricas calculadas para a categoria
+      
+      4. PROCESSAMENTO PARALELO:
+         - O workflow processa 3 cálculos simultaneamente:
+           a) Estatísticas de preço (média e desvio padrão)
+           b) Total de unidades vendidas
+           c) Receita total
+         - Os resultados são combinados antes de salvar
+      
+      5. EXEMPLO DE SAÍDA:
+         Arquivo: vendas_categoria_Eletronicos.csv
+         Conteúdo:
+         Categoria,Média de Preço (R$),Desvio Padrão Preço (R$),Total de Unidades,Receita Total (R$)
+         Eletrônicos,299.50,150.25,1250,374375.00
+    </usage>
+    
+    <dependencies>
+      - Python 3.x
+      - pandas
+      - numpy
+    </dependencies>
+  </documentation>
+
+</workflow>

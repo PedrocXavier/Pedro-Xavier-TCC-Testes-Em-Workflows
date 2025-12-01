@@ -173,10 +173,10 @@ def main(
     start_time = time.time()
     
     # Variáveis de I/O para ADIOS2
-    adios = adios2.ADIOS()
-    io = adios.DeclareIO("KMeansData")
+    adios = adios2.Adios()
+    io = adios.declare_io("KMeansData")
     # Define o motor de I/O (por exemplo, BP4)
-    io.SetEngine("BP4") 
+    io.set_engine("BP4") 
 
     # --- Geração e Escrita dos dados usando ADIOS2 ---
     fragment_list = []
@@ -185,16 +185,16 @@ def main(
     print("Iniciando Geração e Escrita de fragmentos com ADIOS2...")
 
     # Abre o motor para escrita
-    with adios.Open("kmeans.bp", adios2.Mode.Write) as writer:
+    with io.open("kmeans.bp", adios2.Mode.Write) as writer:
         for l in range(0, numpoints, points_per_fragment):
             r = min(numpoints, l + points_per_fragment)
             fragment_data = generate_fragment(r - l, dimensions, mode, seed + l)
             
             # Escreve o fragmento usando o ADIOS2
             var_name = f"Fragment_{l//points_per_fragment}"
-            var = io.DefineVariable(var_name, fragment_data.astype(np.float64), 
+            var = io.define_variable(var_name, fragment_data.astype(np.float64), 
                                     fragment_data.shape, [0]*len(fragment_data.shape), 
-                                    fragment_data.shape, adios2.ConstantDims)
+                                    fragment_data.shape, adios2.constant_dims)
             writer.Put(var, fragment_data, adios2.Mode.Sync)
             
             # Para o processamento serial, mantemos o fragmento na memória

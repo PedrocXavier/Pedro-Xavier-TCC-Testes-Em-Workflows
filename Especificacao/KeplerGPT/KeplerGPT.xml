@@ -1,0 +1,88 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+
+<entity name="WorkflowVendas" class="ptolemy.actor.TypedCompositeActor">
+    <property name="director" class="ptolemy.actor.Director">
+        <property name="class" value="ptolemy.actor.process.ProcessDirector" />
+    </property>
+
+    <!-- CSV Reader -->
+    <entity name="CSVReader" class="org.kepler.actor.io.CSVReader">
+        <property name="fileOrURL" class="ptolemy.data.expr.StringParameter" value="vendas.csv"/>
+        <property name="delimiter" class="ptolemy.data.expr.StringParameter" value="," />
+    </entity>
+
+    <!-- R actor para agrupar por categoria -->
+    <entity name="GroupByCategoria" class="org.kepler.actor.r.RExpression">
+        <property name="expression" class="ptolemy.data.expr.StringParameter" value="
+            # Leitura do dataframe vindo do CSVReader (variável 'data')
+            library(dplyr)
+
+            categorias <- unique(data$categoria)
+
+            # Converte o dataframe em lista filtrada por categoria
+            grouped <- lapply(categorias, function(cat) {
+                subset <- data[data$categoria == cat, ]
+                list(
+                    categoria = cat,
+                    df = subset
+                )
+            })
+
+            # O ator R precisa devolver uma lista para o Kepler
+            result <- grouped
+        "/>
+    </entity>
+
+    <!-- Collection Process para criar paralelismo -->
+    <entity name="ParallelProcess" class="org.kepler.process.CollectionProcess">
+    </entity>
+
+    <!-- Ator R para calcular estatísticas -->
+    <entity name="StatsCalculator" class="org.kepler.actor.r.RExpression">
+        <property name="expression" class="ptolemy.data.expr.StringParameter" value="
+            df <- input$df
+            cat <- input$categoria
+
+            media_preco <- mean(df$preco)
+            desvio_preco <- sd(df$preco)
+            total_unidades <- sum(df$quantidade)
+            receita_total <- sum(df$preco * df$quantidade)
+
+            output <- data.frame(
+                categoria = cat,
+                media_preco = media_preco,
+                desvio_preco = desvio_preco,
+                total_unidades = total_unidades,
+                receita_total = receita_total
+            )
+
+            result <- list(categoria = cat, tabela = output)
+        "/>
+    </entity>
+
+    <!-- Escrita do CSV -->
+    <entity name="WriteCSV" class="org.kepler.actor.io.CSVWriter">
+        <property name="fileName" class="ptolemy.data.expr.StringParameter" value="categoria_%(categoria).csv" />
+    </entity>
+
+    <!-- Ligações -->
+    <relation name="r1"/>
+    <relation name="r2"/>
+    <relation name="r3"/>
+    <relation name="r4"/>
+
+    <link port="CSVReader.output" relation="r1"/>
+    <link port="GroupByCategoria.data" relation="r1"/>
+
+    <link port="GroupByCategoria.result" relation="r2"/>
+    <link port="ParallelProcess.input" relation="r2"/>
+
+    <link port="ParallelProcess.output" relation="r3"/>
+    <link port="StatsCalculator.input" relation="r3"/>
+
+    <link port="StatsCalculator.result" relation="r4"/>
+    <link port="WriteCSV.input" relation="r4"/>
+
+</entity>
