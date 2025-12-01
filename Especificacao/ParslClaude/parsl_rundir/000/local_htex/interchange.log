@@ -1,5 +1,0 @@
-2025-07-18 02:34:35.198 interchange:114 MainProcess(16701) MainThread __init__ [INFO] Attempting connection to client at 127.0.0.1 on ports: 55244,55528,55470
-2025-07-18 02:34:35.200 interchange:126 MainProcess(16701) MainThread __init__ [INFO] Connected to client
-2025-07-18 02:34:35.200 interchange:157 MainProcess(16701) MainThread __init__ [INFO] Bound to port 54304 for incoming worker connections
-2025-07-18 02:34:35.200 interchange:174 MainProcess(16701) MainThread __init__ [INFO] Platform info: {'parsl_v': '2025.07.14', 'python_v': '3.10.12', 'os': 'Linux', 'hostname': 'UltimusPC', 'dir': '/mnt/c/Users/pedro/Pedro/TCC/ParslClaude'}
-2025-07-18 02:34:35.201 interchange:285 MainProcess(16701) MainThread start [INFO] Starting main interchange method

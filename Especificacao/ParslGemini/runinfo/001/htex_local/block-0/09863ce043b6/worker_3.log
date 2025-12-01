@@ -1,4 +1,0 @@
-2025-07-18 03:24:28.007 worker_log:650 25705 MainThread [INFO]  Worker 3 started
-2025-07-18 03:24:28.009 worker_log:763 25705 MainThread [INFO]  Received executor task 2
-2025-07-18 03:24:29.841 worker_log:781 25705 MainThread [INFO]  Completed executor task 2
-2025-07-18 03:24:29.842 worker_log:792 25705 MainThread [INFO]  All processing finished for executor task 2

@@ -1,126 +1,113 @@
-# Este script demonstra o fluxo de trabalho de I/O (leitura), processamento em paralelo
-# (agrupamento por categoria) e I/O (escrita) para o sistema ADIOS2 (conceitualmente).
-# Usamos Pandas para a lógica de agregação de dados, pois o ADIOS2 foca em I/O de alto desempenho.
-
 import pandas as pd
 import numpy as np
+import multiprocessing as mp
 import os
 import time
 
-# --- 1. Configuração do Workflow e Parâmetros ---
-
-# Simulação do APP ID no ambiente ADIOS2/HPC
-APP_ID = "vendas_analysis_1.0"
+# Constante para o nome do arquivo de entrada
 INPUT_FILE = "vendas.csv"
-OUTPUT_DIR = "categorias_processadas"
+OUTPUT_DIR = "saida_vendas_por_categoria"
 
-# Criar o diretório de saída, se não existir
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-print(f"Configuração do Workflow: APP_ID='{APP_ID}', Diretório de Saída='{OUTPUT_DIR}'")
-
-# --- 2. Leitura do Dataset (Conceito ADIOS2 I/O) ---
-# Em um ambiente ADIOS2, esta etapa usaria 'adios2.open()' para ler dados
-# em formato BP de forma eficiente e paralela, distribuindo blocos de dados entre os workers (MPI ranks).
-# Aqui, simulamos a leitura de um CSV para Pandas.
-
-try:
-    print(f"\n[LEITURA I/O] Lendo o arquivo de entrada: {INPUT_FILE}...")
-    # Leitura síncrona, para fins de demonstração
-    df = pd.read_csv(INPUT_FILE)
-    print(f"Leitura concluída. Total de registros: {len(df)}")
-    print("Colunas lidas:", df.columns.tolist())
-
-except FileNotFoundError:
-    print(f"ERRO: Arquivo {INPUT_FILE} não encontrado. Certifique-se de que ele foi gerado.")
-    exit()
-except Exception as e:
-    print(f"ERRO durante a leitura: {e}")
-    exit()
-
-# --- 3. Preparação dos Dados e Agregação ---
-
-# Cálculo da Receita Total para cada linha
-# Nota: Esta é a primeira etapa de processamento antes do agrupamento.
-df['receita_total_item'] = df['preco'] * df['quantidade']
-print("\n[PROCESSAMENTO] Receita total por item calculada.")
-
-# Função para realizar os cálculos de agregação
-def calcular_metricas(group_df):
+def calcular_estatisticas(grupo):
     """
-    Calcula as métricas solicitadas para um grupo de categoria.
-    Esta função simula o trabalho realizado em paralelo por um worker/rank ADIOS2/HPC.
+    Função de agregação personalizada a ser aplicada no groupby.
+    Calcula média e desvio padrão de preço, total de unidades vendidas e 
+    receita total.
     """
-    categoria = group_df['categoria'].iloc[0]
+    # Calcula a receita total para o grupo
+    grupo['receita'] = grupo['preco'] * grupo['quantidade']
     
-    # Cálculos solicitados
-    media_preco = group_df['preco'].mean()
-    desvio_padrao_preco = group_df['preco'].std()
+    # Agregação das métricas
+    return pd.Series({
+        'media_preco': grupo['preco'].mean(),
+        'desvio_padrao_preco': grupo['preco'].std() if len(grupo) > 1 else 0.0,
+        'unidades_vendidas_total': grupo['quantidade'].sum(),
+        'receita_total': grupo['receita'].sum()
+    })
+
+def salvar_grupo_em_csv(categoria_nome, dados_categoria):
+    """
+    Salva os dados agregados de uma única categoria em um arquivo CSV.
+    Esta função será executada em paralelo.
+    """
+    filepath = os.path.join(OUTPUT_DIR, f"{categoria_nome.replace(' ', '_')}_resumo.csv")
     
-    # Se houver apenas 1 item, o desvio padrão é NaN, forçamos 0.0
-    if pd.isna(desvio_padrao_preco):
-        desvio_padrao_preco = 0.0
-        
-    total_unidades = group_df['quantidade'].sum()
-    receita_total_categoria = group_df['receita_total_item'].sum()
+    # Simula o trabalho pesado de I/O que seria paralelizado pelo ADIOS2
+    time.sleep(0.1) 
     
-    # Estrutura de saída (Dataframe de uma linha)
-    resultado = pd.DataFrame([{
-        'categoria': categoria,
-        'media_preco': f"{media_preco:.2f}",
-        'desvio_padrao_preco': f"{desvio_padrao_preco:.2f}",
-        'total_unidades_vendidas': int(total_unidades),
-        'receita_total_categoria': f"{receita_total_categoria:.2f}"
-    }])
+    # A coluna 'categoria' é o índice após o reset_index() na agregação.
+    # Usamos header=True e index=False para um CSV limpo.
+    dados_categoria.to_csv(filepath, index=False, float_format='%.2f')
+    print(f"[{mp.current_process().name}] Salvo: {filepath}")
+
+def executar_workflow():
+    """
+    Função principal que gerencia o fluxo de trabalho de ponta a ponta.
+    """
+    # 1. Carregar o Dataset (Leitura de Dados)
+    print(f"1. Lendo o arquivo: {INPUT_FILE}...")
+    try:
+        df = pd.read_csv(INPUT_FILE)
+    except FileNotFoundError:
+        print(f"ERRO: Arquivo '{INPUT_FILE}' não encontrado. Certifique-se de que foi gerado.")
+        return
     
-    return resultado
-
-# Agrupamento e Aplicação da Função
-# O 'groupby' cria os grupos, e a aplicação em seguida simula a execução paralela
-# do processamento em cada grupo (categoria)
-print("[AGRUPAMENTO E CÁLCULO] Agrupando dados por 'categoria' e aplicando cálculos...")
-
-# Nota: O 'groupby().apply()' não garante paralelismo de thread/processo como o Dask/Spark,
-# mas executa a lógica de cálculo separadamente para cada grupo, atendendo ao requisito lógico.
-resultados_por_categoria = df.groupby('categoria').apply(calcular_metricas).reset_index(drop=True)
-
-print("Cálculos de agregação concluídos para todas as categorias.")
-print("Resultado consolidado:")
-print(resultados_por_categoria)
-
-
-# --- 4. Escrita dos Resultados (Conceito ADIOS2 I/O) ---
-# Em um ambiente ADIOS2, o resultado seria escrito de volta usando 'adios2.open(mode=adios2.Mode.Write)'
-# onde cada rank/worker escreveria sua parte em um único arquivo BP de saída.
-# O requisito aqui é salvar CADA GRUPO em um CSV SEPARADO.
-
-print(f"\n[ESCRITA I/O] Salvando cada resultado de categoria como um arquivo CSV separado no diretório '{OUTPUT_DIR}'...")
-start_time = time.time()
-
-# Iterar sobre os grupos de categoria no DataFrame de resultados
-for index, row in resultados_por_categoria.iterrows():
-    categoria = row['categoria']
+    # 2. Pré-cálculo e Agregação
+    print("2. Calculando métricas e agrupando por categoria...")
     
-    # Filtrar o DataFrame de resultados para obter apenas a linha da categoria atual
-    output_df = pd.DataFrame([row])
+    # Garantir que a coluna de data esteja no formato correto (opcional, mas boa prática)
+    df['data_venda'] = pd.to_datetime(df['data_venda'])
     
-    # Definir o nome do arquivo de saída
-    output_filepath = os.path.join(OUTPUT_DIR, f"{categoria.lower().replace(' ', '_')}_metricas.csv")
+    # Adicionar a coluna de Receita por item (preco * quantidade)
+    df['receita_item'] = df['preco'] * df['quantidade']
     
-    # Salvar o DataFrame como CSV (sem o índice do Pandas)
-    output_df.to_csv(output_filepath, index=False)
+    # Agrupar por 'categoria' e aplicar a função de agregação
+    # Usamos o agg() do pandas para calcular todas as métricas em uma única passagem:
+    resumo_categorias = df.groupby('categoria').agg(
+        # Preço: Média e Desvio Padrão
+        media_preco=('preco', 'mean'),
+        desvio_padrao_preco=('preco', 'std'),
+        # Quantidade: Total de unidades vendidas
+        unidades_vendidas_total=('quantidade', 'sum'),
+        # Receita: Receita Total
+        receita_total=('receita_item', 'sum')
+    ).reset_index()
     
-    print(f"   -> Salvo: {output_filepath}")
+    # Tratar NaN em desvio_padrao_preco (ocorre para grupos com 1 item)
+    resumo_categorias['desvio_padrao_preco'] = resumo_categorias['desvio_padrao_preco'].fillna(0.0)
 
-end_time = time.time()
+    print("\nResumo Agregado:")
+    print(resumo_categorias.to_string(index=False, float_format='%.2f'))
+    
+    # 3. Preparar Diretório de Saída
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+        print(f"\n3. Criado diretório de saída: {OUTPUT_DIR}")
+    
+    # 4. Salvar os resultados em paralelo (Simulação do conceito de I/O paralelo do ADIOS2)
+    print("\n4. Iniciando salvamento paralelo dos arquivos CSV por categoria...")
+    
+    # Cria uma lista de tarefas (tuplas de (nome_categoria, DataFrame_categoria))
+    # Para o salvamento, precisamos dividir o DataFrame agregado em DataFrames por categoria.
+    # No entanto, como já temos o resumo agregado, vamos salvar cada LINHA do resumo.
+    
+    # Cria os argumentos para a função salvar_grupo_em_csv
+    tasks = []
+    # Iteramos sobre as linhas do resumo agregado
+    for _, row in resumo_categorias.iterrows():
+        # Converte a linha de Series para DataFrame para o to_csv
+        df_to_save = pd.DataFrame([row]) 
+        tasks.append((row['categoria'], df_to_save))
 
-# --- 5. Finalização ---
+    # Cria o pool de processos
+    # O número de processos é o número de categorias a serem salvas
+    with mp.Pool(len(tasks)) as pool:
+        # Usa pool.starmap para executar a função com múltiplos argumentos em paralelo
+        # starmap: Mapeia uma função que aceita múltiplos argumentos.
+        pool.starmap(salvar_grupo_em_csv, tasks)
 
-print("\n[FLUXO CONCLUÍDO]")
-print(f"Tempo total de escrita: {end_time - start_time:.4f} segundos.")
-print("Verifique o diretório 'categorias_processadas' para os arquivos de saída.")
+    print("\n5. Workflow concluído. Arquivos CSV de resumo salvos no diretório", OUTPUT_DIR)
 
-# Exemplo de conteúdo de um dos arquivos CSV de saída (para fins de demonstração)
-if os.path.exists(os.path.join(OUTPUT_DIR, "eletronicos_metricas.csv")):
-    print("\nConteúdo do arquivo 'eletronicos_metricas.csv' (Exemplo):")
-    with open(os.path.join(OUTPUT_DIR, "eletronicos_metricas.csv"), 'r') as f:
-        print(f.read())
+if __name__ == "__main__":
+    # É necessário que o Pandas e o Numpy estejam instalados (pip install pandas numpy)
+    executar_workflow()

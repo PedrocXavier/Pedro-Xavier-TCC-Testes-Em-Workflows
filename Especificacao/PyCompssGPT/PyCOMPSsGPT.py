@@ -1,74 +1,69 @@
-# ============================================
-# Workflow PyCOMPSs - Análise de Vendas por Categoria
-# ============================================
-
 import pandas as pd
 import numpy as np
+
 from pycompss.api.task import task
-from pycompss.api.api import compss_wait_on, compss_barrier
-import os
+from pycompss.api.parameter import FILE_IN, FILE_OUT
+from pycompss.api.api import compss_wait_on
 
-# -------------------------------------------------
-# Task: Calcular métricas por categoria
-# -------------------------------------------------
-@task(category=str, df=pd.DataFrame, returns=str)
-def process_category(category, df):
-    """
-    Calcula métricas agregadas para uma categoria de produtos.
-    Retorna o nome do arquivo CSV salvo.
-    """
-    mean_price = df['preco'].mean()
-    std_price = df['preco'].std()
-    total_units = df['quantidade'].sum()
-    total_revenue = (df['preco'] * df['quantidade']).sum()
 
-    # Cria DataFrame com o resumo
-    summary = pd.DataFrame({
-        'categoria': [category],
-        'media_preco': [mean_price],
-        'desvio_padrao_preco': [std_price],
-        'total_unidades': [total_units],
-        'receita_total': [total_revenue]
+# ------------------------------------------------------------
+# TAREFA PARA PROCESSAR UMA CATEGORIA
+# ------------------------------------------------------------
+@task(data_chunk=FILE_IN, output_file=FILE_OUT)
+def processar_categoria(data_chunk, output_file):
+    """Processa estatísticas de uma categoria e salva CSV."""
+    df = pd.read_csv(data_chunk)
+
+    media_preco = df["preco"].mean()
+    desvio_preco = df["preco"].std()
+    total_unidades = df["quantidade"].sum()
+    receita_total = (df["preco"] * df["quantidade"]).sum()
+
+    resultado = pd.DataFrame({
+        "categoria": [df["categoria"].iloc[0]],
+        "media_preco": [media_preco],
+        "desvio_preco": [desvio_preco],
+        "total_unidades": [total_unidades],
+        "receita_total": [receita_total]
     })
 
-    # Salva o resultado como CSV
-    filename = f"saida_{category}.csv"
-    summary.to_csv(filename, index=False)
-    return filename
+    resultado.to_csv(output_file, index=False)
 
-# -------------------------------------------------
-# Função principal
-# -------------------------------------------------
-def main():
-    # Caminho para o dataset de entrada
-    input_file = "vendas.csv"
 
-    # Leitura dos dados
-    df = pd.read_csv(input_file)
+# ------------------------------------------------------------
+# FUNÇÃO PRINCIPAL DO WORKFLOW
+# ------------------------------------------------------------
+def workflow_vendas(input_csv="vendas.csv"):
+    # Lê o dataset completo (execução serial aqui)
+    df = pd.read_csv(input_csv)
 
     # Agrupa por categoria
-    grouped = df.groupby('categoria')
+    categorias = df["categoria"].unique()
 
-    # Lista para armazenar as tasks
-    output_files = []
+    tarefas = []
 
-    # Cria uma task por categoria
-    for category, group in grouped:
-        output = process_category(category, group)
-        output_files.append(output)
+    for cat in categorias:
+        df_cat = df[df["categoria"] == cat]
 
-    # Espera todas as tasks terminarem
-    output_files = compss_wait_on(output_files)
+        # Salva temporariamente o grupo em CSV para o task
+        temp_file = f"tmp_categoria_{cat}.csv"
+        df_cat.to_csv(temp_file, index=False)
 
-    print("\nArquivos gerados:")
-    for f in output_files:
-        print(f"- {f}")
+        # Nome do arquivo de saída
+        output_file = f"resultado_{cat}.csv"
 
-    compss_barrier()
-    print("\nWorkflow finalizado com sucesso.")
+        # Lança tarefa PyCOMPSs para processar a categoria
+        t = processar_categoria(temp_file, output_file)
+        tarefas.append(t)
 
-# -------------------------------------------------
-# Execução padrão (fora do COMPSs, para testes)
-# -------------------------------------------------
+    # Espera todas as tarefas terminarem
+    compss_wait_on(tarefas)
+
+    print("Processamento concluído. Arquivos gerados por categoria.")
+
+
+# ------------------------------------------------------------
+# EXECUÇÃO DIRETA
+# ------------------------------------------------------------
 if __name__ == "__main__":
-    main()
+    workflow_vendas()

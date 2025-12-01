@@ -1,100 +1,96 @@
-from mpi4py import MPI
 import adios2
 import pandas as pd
 import numpy as np
 import os
 
-# ============================================================
-# Inicialização MPI
-# ============================================================
-comm = MPI.COMM_WORLD
-rank = comm.Get_rank()
-size = comm.Get_size()
+# ================================================================
+# 1. Leitura do dataset
+# ================================================================
+dataset = pd.read_csv("vendas.csv")
 
-# ============================================================
-# Leitura do dataset pelo processo 0
-# ============================================================
-csv_path = "vendas.csv"   # dataset de entrada
+# Agrupar por categoria
+categorias = dataset["categoria"].unique()
 
-if rank == 0:
-    df = pd.read_csv(csv_path)
-    categorias = sorted(df["categoria"].unique())
-else:
-    df = None
-    categorias = None
 
-# Broadcast para todos os processos
-df = comm.bcast(df, root=0)
-categorias = comm.bcast(categorias, root=0)
+# ================================================================
+# 2. Função que processa cada categoria e escreve via ADIOS2
+# ================================================================
+def processar_categoria(cat):
+    df_cat = dataset[dataset["categoria"] == cat]
 
-# Cada processo recebe um subconjunto de categorias
-categorias_local = categorias[rank::size]
+    preco = df_cat["preco"].to_numpy()
+    quantidade = df_cat["quantidade"].to_numpy()
 
-# ============================================================
-# Processamento por categoria
-# ============================================================
-resultados_locais = []
+    media_preco = float(np.mean(preco))
+    desvio_preco = float(np.std(preco))
+    total_unidades = int(np.sum(quantidade))
+    receita_total = float(np.sum(preco * quantidade))
 
-for cat in categorias_local:
-    df_cat = df[df["categoria"] == cat]
+    # ------------------------------------------------------------
+    # Escrever os dados usando ADIOS2 (formato BP4)
+    # ------------------------------------------------------------
+    bpfile = f"saida_{cat}.bp"
 
-    preco_medio = df_cat["preco"].mean()
-    preco_std = df_cat["preco"].std()
-    total_qtd = df_cat["quantidade"].sum()
-    receita_total = (df_cat["preco"] * df_cat["quantidade"]).sum()
+    adios = adios2.Adios() # Linha gerada originalmente foi adios = adios2.ADIOS()
+    io = adios.declare_io(f"io_{cat}") # Linha gerada originalmente foi io = adios.DeclareIO
+    io.set_engine("BP4") # Linha gerada originalmente foi io.SetEngine
 
-    resultados_locais.append({
-        "categoria": cat,
-        "preco_medio": preco_medio,
-        "preco_desvio_padrao": preco_std,
-        "total_unidades": total_qtd,
-        "receita_total": receita_total
-    })
+    var_media = io.define_variable("media_preco", media_preco) # Linha gerada originalmente foi var_media = io.DefineVariable
+    var_std = io.define_variable("desvio_preco", desvio_preco) # Linha gerada originalmente foi var_desvio = io.DefineVariable
+    var_units = io.define_variable("total_unidades", total_unidades) # Linha gerada originalmente foi var_unidades = io.DefineVariable
+    var_receita = io.define_variable("receita_total", receita_total) # Linha gerada originalmente foi var_receita = io.DefineVariable
 
-# ============================================================
-# Escrita de saída com ADIOS2 (um CSV por categoria)
-# ============================================================
-output_dir = "resultados_por_categoria"
-if rank == 0 and not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-comm.Barrier()
+    writer = io.open(bpfile, adios2.Mode.Write) # Linha gerada originalmente foi engine = io.Open
 
-adios = adios2.ADIOS()
-io = adios.declare_io("categoria_writer")
+    writer.begin_step() # Linha gerada originalmente foi engine.BeginStep()
+    writer.put(var_media, media_preco) # Linha gerada originalmente foi writer.Put
+    writer.put(var_std, desvio_preco) # Linha gerada originalmente foi writer.Put
+    writer.put(var_units, total_unidades) # Linha gerada originalmente foi writer.Put
+    writer.put(var_receita, receita_total) # Linha gerada originalmente foi writer.Put
+    writer.end_step() # Linha gerada originalmente foi engine.EndStep()
 
-for res in resultados_locais:
+    writer.close() # Linha gerada originalmente foi engine.Close()
 
-    cat = res["categoria"]
-    filename = f"{output_dir}/{cat}.csv.bp"  # Saída no formato ADIOS2 BP
+    # ------------------------------------------------------------
+    # Após gerar o BP4, criar o CSV correspondente
+    # ------------------------------------------------------------
+    df_out = pd.DataFrame(
+        [{
+            "categoria": cat,
+            "media_preco": media_preco,
+            "desvio_preco": desvio_preco,
+            "total_unidades": total_unidades,
+            "receita_total": receita_total,
+        }]
+    )
 
-    # Variáveis ADIOS2
-    io.define_variable("categoria", res["categoria"])
-    io.define_variable("preco_medio", res["preco_medio"])
-    io.define_variable("preco_desvio_padrao", res["preco_desvio_padrao"])
-    io.define_variable("total_unidades", res["total_unidades"])
-    io.define_variable("receita_total", res["receita_total"])
+    df_out.to_csv(f"saida_{cat}.csv", index=False)
 
-    # Escrita
-    with io.open(filename, "w") as writer:
-        writer.write("categoria", res["categoria"])
-        writer.write("preco_medio", res["preco_medio"])
-        writer.write("preco_desvio_padrao", res["preco_desvio_padrao"])
-        writer.write("total_unidades", res["total_unidades"])
-        writer.write("receita_total", res["receita_total"])
+    print(f"[OK] Categoria '{cat}' processada.")
 
-# ============================================================
-# Conversão opcional de BP → CSV (cada processo converte localmente)
-# ============================================================
-for res in resultados_locais:
-    cat = res["categoria"]
-    bp_file = f"{output_dir}/{cat}.csv.bp"
-    csv_file = f"{output_dir}/{cat}.csv"
 
-    # Escreve CSV legível pelo usuário
-    df_out = pd.DataFrame([res])
-    df_out.to_csv(csv_file, index=False)
+# ================================================================
+# 3. Execução em paralelo (MPI ou Threads)
+# ================================================================
+# Se você rodar com mpirun/mpiexec, cada processo cuida de uma categoria.
+# Exemplo:
+#     mpirun -np 4 python workflow.py
+# ================================================================
+try:
+    from mpi4py import MPI
 
-comm.Barrier()
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
 
-if rank == 0:
-    print("Workflow finalizado com sucesso!")
+    # Distribuir categorias entre processos
+    for i, cat in enumerate(categorias):
+        if i % size == rank:
+            processar_categoria(cat)
+
+    comm.Barrier()
+
+except ImportError:
+    # Execução sequencial caso mpi4py não esteja disponível
+    for cat in categorias:
+        processar_categoria(cat)

@@ -95,7 +95,7 @@ def kmeans_adios(
     size = comm.Get_size()
     
     # Inicializar ADIOS2
-    adios = adios2.ADIOS(comm)
+    adios = adios2.Adios(comm)
     
     # Configurar centros iniciais (apenas no rank 0)
     if rank == 0:

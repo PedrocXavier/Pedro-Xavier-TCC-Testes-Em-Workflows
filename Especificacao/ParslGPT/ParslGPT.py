@@ -1,81 +1,78 @@
 import parsl
-from parsl import python_app, bash_app, DataFlowKernel, Config
-from parsl.executors.threads import ThreadPoolExecutor
-
+from parsl import python_app, bash_app, DataFlowKernel, File
 import pandas as pd
 import os
 
-# ========================
-# Configuração do Parsl
-# ========================
-config = Config(
-    executors=[
-        ThreadPoolExecutor(
-            max_threads=4,  # Ajuste de acordo com sua máquina
-            label="local_threads"
-        )
-    ],
-    strategy=None,
+# -------------------------------------------------------------------
+# Configuração básica do Parsl (threads locais)
+# -------------------------------------------------------------------
+from parsl.config import Config
+from parsl.executors.threads import ThreadPoolExecutor
+
+parsl.load(
+    Config(
+        executors=[ThreadPoolExecutor(max_threads=4)],
+        strategy=None
+    )
 )
-parsl.load(config)
 
-
-# ========================
-# Funções em paralelo
-# ========================
-
+# -------------------------------------------------------------------
+# 1) App que processa cada categoria
+# -------------------------------------------------------------------
 @python_app
-def processar_categoria(categoria, df_categoria, output_dir="resultados"):
+def processar_categoria(df_categoria, categoria, output_path):
     import pandas as pd
-    import os
-    
-    # Garantir que o diretório de saída exista
-    os.makedirs(output_dir, exist_ok=True)
 
-    # Cálculos
-    media_preco = df_categoria['preco'].mean()
-    desvio_preco = df_categoria['preco'].std()
-    total_unidades = df_categoria['quantidade'].sum()
-    receita_total = (df_categoria['preco'] * df_categoria['quantidade']).sum()
+    preco_medio = df_categoria["preco"].mean()
+    preco_std = df_categoria["preco"].std()
+    total_unidades = df_categoria["quantidade"].sum()
+    receita_total = (df_categoria["preco"] * df_categoria["quantidade"]).sum()
 
-    # Montar resultado em DataFrame
-    resultado = pd.DataFrame([{
-        "categoria": categoria,
-        "media_preco": media_preco,
-        "desvio_preco": desvio_preco,
-        "total_unidades": total_unidades,
-        "receita_total": receita_total
-    }])
+    resumo = pd.DataFrame({
+        "categoria": [categoria],
+        "preco_medio": [preco_medio],
+        "preco_std": [preco_std],
+        "total_unidades": [total_unidades],
+        "receita_total": [receita_total]
+    })
 
-    # Salvar CSV específico da categoria
-    output_file = os.path.join(output_dir, f"{categoria}.csv")
-    resultado.to_csv(output_file, index=False)
+    resumo.to_csv(output_path, index=False)
 
-    return output_file
+    return f"Arquivo gerado: {output_path}"
 
+# -------------------------------------------------------------------
+# 2) Função principal do workflow
+# -------------------------------------------------------------------
+def workflow_vendas(input_csv, pasta_saida="resultados_parsl"):
 
-# ========================
-# Função principal
-# ========================
-def main():
-    # Exemplo: carregando dataset fictício
-    df = pd.read_csv("vendas.csv")
+    # Garante que a pasta de saída existe
+    os.makedirs(pasta_saida, exist_ok=True)
 
-    # Agrupar por categoria
-    grupos = df.groupby("categoria")
+    # Lê dataset
+    df = pd.read_csv(input_csv)
 
-    # Criar lista de tarefas Parsl
+    # Agrupa por categoria
+    categorias = df["categoria"].unique()
+
     tarefas = []
-    for categoria, df_categoria in grupos:
-        tarefas.append(processar_categoria(categoria, df_categoria))
 
-    # Esperar resultados
-    arquivos_gerados = [t.result() for t in tarefas]
+    for cat in categorias:
+        df_cat = df[df["categoria"] == cat]
 
-    print("Arquivos gerados:")
-    for arq in arquivos_gerados:
-        print(arq)
+        # Nome do arquivo de saída da categoria
+        out_file = os.path.join(pasta_saida, f"{cat}_resumo.csv")
 
+        # Executa tarefa paralela
+        tarefa = processar_categoria(df_cat, cat, out_file)
+        tarefas.append(tarefa)
 
+    # Aguarda as tarefas
+    resultados = [t.result() for t in tarefas]
+    return resultados
+
+# -------------------------------------------------------------------
+# 3) Execução do workflow
+# -------------------------------------------------------------------
 if __name__ == "__main__":
-    main()
+    resultados = workflow_vendas("vendas.csv")
+    print("\n".join(resultados))

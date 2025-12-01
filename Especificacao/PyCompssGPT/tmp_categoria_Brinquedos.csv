@@ -1,0 +1,14 @@
+produto_id,categoria,preco,quantidade,data_venda
+1,Brinquedos,1830.34,11,2024-11-01
+11,Brinquedos,768.94,16,2024-05-22
+15,Brinquedos,475.79,9,2024-10-14
+17,Brinquedos,85.67,3,2024-12-07
+20,Brinquedos,881.48,16,2024-07-04
+23,Brinquedos,953.36,11,2024-05-04
+29,Brinquedos,410.11,3,2024-06-28
+30,Brinquedos,1885.99,16,2024-06-18
+32,Brinquedos,1391.1,18,2024-09-27
+33,Brinquedos,1761.53,14,2024-02-23
+41,Brinquedos,652.07,4,2024-07-14
+43,Brinquedos,715.81,14,2024-12-30
+50,Brinquedos,333.49,16,2024-09-25

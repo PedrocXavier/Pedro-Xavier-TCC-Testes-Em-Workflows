@@ -1,6 +1,6 @@
 """
-Workflow Parsl para análise paralela de dados de vendas no varejo
-Processa dados agrupados por categoria e calcula métricas estatísticas
+Workflow Parsl para Análise de Vendas no Varejo
+Processa dados de vendas agrupados por categoria em paralelo
 """
 
 import parsl
@@ -10,15 +10,13 @@ from parsl.executors import ThreadPoolExecutor
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from typing import Dict, List
 import logging
 
-# Configuração do logging
-logging.basicConfig(level=logging.INFO)
+# Configuração de logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-
-# Configuração do Parsl com executor de threads para I/O
+# Configuração do Parsl com executor de threads para paralelização
 config = Config(
     executors=[
         ThreadPoolExecutor(
@@ -32,290 +30,203 @@ parsl.load(config)
 
 
 @python_app
-def ler_dataset(caminho_arquivo: str) -> pd.DataFrame:
+def carregar_e_agrupar_dados(arquivo_csv):
     """
-    Lê o dataset de vendas do arquivo CSV
-    
-    Args:
-        caminho_arquivo: Caminho para o arquivo CSV
-        
-    Returns:
-        DataFrame com os dados de vendas
+    Carrega o dataset e retorna lista de categorias únicas
     """
     import pandas as pd
     
-    df = pd.read_csv(caminho_arquivo)
+    df = pd.read_csv(arquivo_csv)
     
     # Validação das colunas necessárias
     colunas_requeridas = ['produto_id', 'categoria', 'preco', 'quantidade', 'data_venda']
-    if not all(col in df.columns for col in colunas_requeridas):
-        raise ValueError(f"Dataset deve conter as colunas: {colunas_requeridas}")
+    colunas_faltantes = set(colunas_requeridas) - set(df.columns)
     
-    # Conversão de tipos
-    df['preco'] = pd.to_numeric(df['preco'], errors='coerce')
-    df['quantidade'] = pd.to_numeric(df['quantidade'], errors='coerce')
-    df['data_venda'] = pd.to_datetime(df['data_venda'], errors='coerce')
+    if colunas_faltantes:
+        raise ValueError(f"Colunas faltantes no dataset: {colunas_faltantes}")
     
-    # Remove linhas com valores nulos
-    df = df.dropna()
+    # Retorna o caminho do arquivo e lista de categorias
+    categorias = df['categoria'].unique().tolist()
     
-    return df
+    return {
+        'arquivo': arquivo_csv,
+        'categorias': categorias,
+        'total_registros': len(df)
+    }
 
 
 @python_app
-def agrupar_por_categoria(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+def calcular_estatisticas_categoria(arquivo_csv, categoria):
     """
-    Agrupa o dataset por categoria
-    
-    Args:
-        df: DataFrame com dados de vendas
-        
-    Returns:
-        Dicionário com DataFrames por categoria
+    Calcula estatísticas para uma categoria específica
     """
     import pandas as pd
-    
-    grupos = {}
-    for categoria, grupo_df in df.groupby('categoria'):
-        grupos[categoria] = grupo_df.copy()
-    
-    return grupos
-
-
-@python_app
-def calcular_estatisticas_preco(df_categoria: pd.DataFrame, categoria: str) -> Dict:
-    """
-    Calcula média e desvio padrão do preço para uma categoria
-    
-    Args:
-        df_categoria: DataFrame filtrado por categoria
-        categoria: Nome da categoria
-        
-    Returns:
-        Dicionário com estatísticas de preço
-    """
     import numpy as np
     
-    preco_medio = df_categoria['preco'].mean()
-    preco_desvio = df_categoria['preco'].std()
+    # Carrega apenas os dados da categoria
+    df = pd.read_csv(arquivo_csv)
+    df_categoria = df[df['categoria'] == categoria].copy()
     
-    return {
+    # Cálculo das estatísticas
+    estatisticas = {
         'categoria': categoria,
-        'preco_medio': preco_medio,
-        'preco_desvio_padrao': preco_desvio
+        'media_preco': df_categoria['preco'].mean(),
+        'desvio_padrao_preco': df_categoria['preco'].std(),
+        'total_unidades_vendidas': df_categoria['quantidade'].sum(),
+        'receita_total': (df_categoria['preco'] * df_categoria['quantidade']).sum(),
+        'numero_vendas': len(df_categoria),
+        'preco_minimo': df_categoria['preco'].min(),
+        'preco_maximo': df_categoria['preco'].max(),
+        'quantidade_media': df_categoria['quantidade'].mean()
     }
+    
+    return estatisticas
 
 
 @python_app
-def calcular_unidades_vendidas(df_categoria: pd.DataFrame, categoria: str) -> Dict:
+def salvar_resultado_categoria(estatisticas, diretorio_saida='resultados'):
     """
-    Calcula o total de unidades vendidas para uma categoria
-    
-    Args:
-        df_categoria: DataFrame filtrado por categoria
-        categoria: Nome da categoria
-        
-    Returns:
-        Dicionário com total de unidades
-    """
-    total_unidades = df_categoria['quantidade'].sum()
-    
-    return {
-        'categoria': categoria,
-        'total_unidades_vendidas': total_unidades
-    }
-
-
-@python_app
-def calcular_receita_total(df_categoria: pd.DataFrame, categoria: str) -> Dict:
-    """
-    Calcula a receita total para uma categoria
-    
-    Args:
-        df_categoria: DataFrame filtrado por categoria
-        categoria: Nome da categoria
-        
-    Returns:
-        Dicionário com receita total
-    """
-    df_categoria_copy = df_categoria.copy()
-    df_categoria_copy['receita'] = df_categoria_copy['preco'] * df_categoria_copy['quantidade']
-    receita_total = df_categoria_copy['receita'].sum()
-    
-    return {
-        'categoria': categoria,
-        'receita_total': receita_total
-    }
-
-
-@python_app
-def consolidar_metricas(
-    stats_preco: Dict,
-    stats_unidades: Dict,
-    stats_receita: Dict
-) -> Dict:
-    """
-    Consolida todas as métricas calculadas em um único dicionário
-    
-    Args:
-        stats_preco: Estatísticas de preço
-        stats_unidades: Estatísticas de unidades
-        stats_receita: Estatísticas de receita
-        
-    Returns:
-        Dicionário consolidado com todas as métricas
-    """
-    resultado = {**stats_preco, **stats_unidades, **stats_receita}
-    return resultado
-
-
-@python_app
-def salvar_resultado_csv(
-    metricas: Dict,
-    df_categoria: pd.DataFrame,
-    diretorio_saida: str
-) -> str:
-    """
-    Salva os resultados em arquivo CSV
-    
-    Args:
-        metricas: Dicionário com métricas calculadas
-        df_categoria: DataFrame da categoria
-        diretorio_saida: Diretório onde salvar os arquivos
-        
-    Returns:
-        Caminho do arquivo salvo
+    Salva as estatísticas de uma categoria em arquivo CSV
     """
     import pandas as pd
     from pathlib import Path
     
+    # Cria diretório de saída se não existir
     Path(diretorio_saida).mkdir(parents=True, exist_ok=True)
     
-    categoria = metricas['categoria']
-    nome_arquivo = f"{diretorio_saida}/categoria_{categoria.replace(' ', '_')}.csv"
+    categoria = estatisticas['categoria']
+    arquivo_saida = f"{diretorio_saida}/resultado_{categoria.replace(' ', '_').lower()}.csv"
     
-    # Cria DataFrame de resumo
-    resumo_df = pd.DataFrame([metricas])
+    # Converte para DataFrame e salva
+    df_resultado = pd.DataFrame([estatisticas])
+    df_resultado.to_csv(arquivo_saida, index=False, encoding='utf-8')
     
-    # Adiciona dados detalhados da categoria
-    df_detalhado = df_categoria.copy()
-    df_detalhado['receita'] = df_detalhado['preco'] * df_detalhado['quantidade']
-    
-    # Salva arquivo com duas seções: resumo e detalhes
-    with open(nome_arquivo, 'w') as f:
-        f.write("# RESUMO DA CATEGORIA\n")
-        resumo_df.to_csv(f, index=False)
-        f.write("\n# DADOS DETALHADOS\n")
-        df_detalhado.to_csv(f, index=False)
-    
-    return nome_arquivo
+    return {
+        'categoria': categoria,
+        'arquivo': arquivo_saida,
+        'status': 'sucesso'
+    }
 
 
-def processar_workflow_vendas(caminho_dataset: str, diretorio_saida: str = 'resultados'):
+@python_app
+def gerar_relatorio_consolidado(resultados_individuais, diretorio_saida='resultados'):
     """
-    Função principal que orquestra o workflow completo
-    
-    Args:
-        caminho_dataset: Caminho para o arquivo CSV com dados de vendas
-        diretorio_saida: Diretório onde salvar os resultados
-        
-    Returns:
-        Lista de futures com caminhos dos arquivos salvos
+    Gera um relatório consolidado com todas as categorias
     """
-    logger.info("Iniciando workflow de análise de vendas")
+    import pandas as pd
+    from pathlib import Path
     
-    # 1. Ler dataset
-    df_future = ler_dataset(caminho_dataset)
+    # Aguarda todos os resultados
+    dados_consolidados = []
     
-    # 2. Agrupar por categoria
-    grupos_future = agrupar_por_categoria(df_future)
+    for resultado in resultados_individuais:
+        if resultado['status'] == 'sucesso':
+            df_cat = pd.read_csv(resultado['arquivo'])
+            dados_consolidados.append(df_cat)
     
-    # Aguarda o agrupamento para obter as categorias
-    grupos = grupos_future.result()
+    # Combina todos os resultados
+    df_consolidado = pd.concat(dados_consolidados, ignore_index=True)
     
-    logger.info(f"Processando {len(grupos)} categorias em paralelo")
+    # Ordena por receita total (decrescente)
+    df_consolidado = df_consolidado.sort_values('receita_total', ascending=False)
     
-    # 3. Processar cada categoria em paralelo
-    arquivos_salvos = []
+    # Salva relatório consolidado
+    arquivo_consolidado = f"{diretorio_saida}/relatorio_consolidado.csv"
+    df_consolidado.to_csv(arquivo_consolidado, index=False, encoding='utf-8')
     
-    for categoria, df_categoria in grupos.items():
-        logger.info(f"Processando categoria: {categoria}")
-        
-        # Calcula métricas em paralelo
-        stats_preco_future = calcular_estatisticas_preco(df_categoria, categoria)
-        stats_unidades_future = calcular_unidades_vendidas(df_categoria, categoria)
-        stats_receita_future = calcular_receita_total(df_categoria, categoria)
-        
-        # Consolida métricas
-        metricas_future = consolidar_metricas(
-            stats_preco_future,
-            stats_unidades_future,
-            stats_receita_future
+    return {
+        'arquivo_consolidado': arquivo_consolidado,
+        'total_categorias': len(df_consolidado),
+        'receita_total_geral': df_consolidado['receita_total'].sum()
+    }
+
+
+def executar_workflow(arquivo_entrada='vendas.csv', diretorio_saida='resultados'):
+    """
+    Função principal que orquestra o workflow
+    """
+    logger.info("="*60)
+    logger.info("Iniciando Workflow de Análise de Vendas")
+    logger.info("="*60)
+    
+    # Etapa 1: Carregar dados e identificar categorias
+    logger.info(f"\n[Etapa 1] Carregando dataset: {arquivo_entrada}")
+    dados_future = carregar_e_agrupar_dados(arquivo_entrada)
+    dados = dados_future.result()
+    
+    logger.info(f"✓ Dataset carregado: {dados['total_registros']} registros")
+    logger.info(f"✓ Categorias encontradas: {len(dados['categorias'])}")
+    logger.info(f"  Categorias: {', '.join(dados['categorias'])}")
+    
+    # Etapa 2: Processar cada categoria em paralelo
+    logger.info(f"\n[Etapa 2] Processando categorias em paralelo...")
+    
+    futures_estatisticas = []
+    for categoria in dados['categorias']:
+        future = calcular_estatisticas_categoria(arquivo_entrada, categoria)
+        futures_estatisticas.append(future)
+    
+    # Aguarda conclusão dos cálculos
+    estatisticas_resultados = [f.result() for f in futures_estatisticas]
+    logger.info(f"✓ Estatísticas calculadas para {len(estatisticas_resultados)} categorias")
+    
+    # Etapa 3: Salvar resultados individuais em paralelo
+    logger.info(f"\n[Etapa 3] Salvando resultados individuais...")
+    
+    futures_salvamento = []
+    for estatistica in estatisticas_resultados:
+        future = salvar_resultado_categoria(estatistica, diretorio_saida)
+        futures_salvamento.append(future)
+    
+    # Aguarda salvamento
+    resultados_salvamento = [f.result() for f in futures_salvamento]
+    
+    for resultado in resultados_salvamento:
+        logger.info(f"✓ Arquivo salvo: {resultado['arquivo']}")
+    
+    # Etapa 4: Gerar relatório consolidado
+    logger.info(f"\n[Etapa 4] Gerando relatório consolidado...")
+    
+    relatorio_future = gerar_relatorio_consolidado(resultados_salvamento, diretorio_saida)
+    relatorio = relatorio_future.result()
+    
+    logger.info(f"✓ Relatório consolidado: {relatorio['arquivo_consolidado']}")
+    
+    # Resumo final
+    logger.info("\n" + "="*60)
+    logger.info("RESUMO DA EXECUÇÃO")
+    logger.info("="*60)
+    logger.info(f"Total de categorias processadas: {relatorio['total_categorias']}")
+    logger.info(f"Receita total geral: R$ {relatorio['receita_total_geral']:,.2f}")
+    logger.info(f"Arquivos gerados em: {diretorio_saida}/")
+    logger.info("="*60)
+    
+    return {
+        'sucesso': True,
+        'categorias_processadas': relatorio['total_categorias'],
+        'receita_total': relatorio['receita_total_geral'],
+        'diretorio_saida': diretorio_saida
+    }
+
+
+if __name__ == "__main__":
+    try:
+        # Executa o workflow
+        resultado = executar_workflow(
+            arquivo_entrada='vendas.csv',
+            diretorio_saida='resultados'
         )
         
-        # Salva resultado
-        arquivo_future = salvar_resultado_csv(
-            metricas_future,
-            df_categoria,
-            diretorio_saida
-        )
+        print("\n✅ Workflow concluído com sucesso!")
         
-        arquivos_salvos.append(arquivo_future)
-    
-    return arquivos_salvos
-
-
-def criar_dataset_exemplo(caminho: str = 'vendas_exemplo.csv'):
-    """
-    Cria um dataset de exemplo para teste
-    
-    Args:
-        caminho: Caminho onde salvar o arquivo
-    """
-    np.random.seed(42)
-    
-    categorias = ['Eletrônicos', 'Roupas', 'Alimentos', 'Livros', 'Brinquedos']
-    
-    dados = []
-    for i in range(1000):
-        dados.append({
-            'produto_id': f'PROD_{i:04d}',
-            'categoria': np.random.choice(categorias),
-            'preco': np.random.uniform(10, 500),
-            'quantidade': np.random.randint(1, 20),
-            'data_venda': pd.date_range('2024-01-01', '2024-12-31', periods=1000)[i]
-        })
-    
-    df = pd.DataFrame(dados)
-    df.to_csv(caminho, index=False)
-    logger.info(f"Dataset de exemplo criado: {caminho}")
-    
-    return caminho
-
-
-# Exemplo de uso
-if __name__ == '__main__':
-    # Cria dataset de exemplo
-    arquivo_vendas = criar_dataset_exemplo()
-    
-    # Executa o workflow
-    futures_resultados = processar_workflow_vendas(
-        caminho_dataset=arquivo_vendas,
-        diretorio_saida='resultados_vendas'
-    )
-    
-    # Aguarda conclusão e exibe resultados
-    print("\n" + "="*60)
-    print("WORKFLOW CONCLUÍDO")
-    print("="*60)
-    
-    for future in futures_resultados:
-        arquivo_salvo = future.result()
-        print(f"✓ Arquivo salvo: {arquivo_salvo}")
-    
-    print("\n" + "="*60)
-    print(f"Total de arquivos gerados: {len(futures_resultados)}")
-    print("="*60)
-    
-    # Limpa recursos do Parsl
-    parsl.clear()
+    except FileNotFoundError:
+        logger.error("❌ Erro: Arquivo 'vendas.csv' não encontrado!")
+        logger.error("   Por favor, forneça o arquivo de vendas no mesmo diretório.")
+        
+    except Exception as e:
+        logger.error(f"❌ Erro durante execução: {str(e)}")
+        raise
+        
+    finally:
+        # Finaliza o Parsl
+        parsl.clear()

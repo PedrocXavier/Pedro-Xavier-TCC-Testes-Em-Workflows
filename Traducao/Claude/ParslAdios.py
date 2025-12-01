@@ -10,7 +10,7 @@ rank = comm.Get_rank()
 size = comm.Get_size()
 
 # Configuração do ADIOS 2
-adios = adios2.ADIOS(comm)
+adios = adios2.Adios(comm)
 
 # Etapa 1: Gerar números semi-aleatórios em paralelo
 def generate_numbers(num_files=5):

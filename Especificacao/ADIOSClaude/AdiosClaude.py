@@ -1,282 +1,206 @@
-import numpy as np
-import pandas as pd
-from adios2 import Stream, FileReader, FileWriter
-import os
-from collections import defaultdict
-from datetime import datetime
-
-# =====================================================
-# CONFIGURAÇÃO DO WORKFLOW ADIOS2
-# =====================================================
-
-class VendasWorkflowADIOS2:
-    """
-    Workflow para processamento paralelo de dados de vendas usando ADIOS2
-    """
-    
-    def __init__(self, input_file, output_dir="output_vendas"):
-        self.input_file = input_file
-        self.output_dir = output_dir
-        self.categorias_data = defaultdict(list)
-        
-        # Criar diretório de saída se não existir
-        os.makedirs(output_dir, exist_ok=True)
-    
-    def ler_dataset_adios2(self):
-        """
-        Lê o dataset usando ADIOS2 Stream
-        """
-        print(f"[ADIOS2] Lendo dataset: {self.input_file}")
-        
-        try:
-            # Simulação de leitura com ADIOS2
-            # Em produção, usaria: with Stream(self.input_file, "r") as stream:
-            df = pd.read_csv(self.input_file)
-            print(f"[ADIOS2] Dataset carregado: {len(df)} registros")
-            return df
-        except Exception as e:
-            print(f"[ERRO] Falha ao ler dataset: {e}")
-            return None
-    
-    def agrupar_por_categoria(self, df):
-        """
-        Agrupa dados por categoria
-        """
-        print("[ADIOS2] Agrupando dados por categoria...")
-        
-        for categoria in df['categoria'].unique():
-            categoria_df = df[df['categoria'] == categoria]
-            self.categorias_data[categoria] = categoria_df
-            print(f"  - Categoria '{categoria}': {len(categoria_df)} registros")
-        
-        return self.categorias_data
-    
-    def calcular_metricas_paralelo(self, categoria, df_categoria):
-        """
-        Calcula métricas para uma categoria específica (executável em paralelo)
-        """
-        print(f"[WORKER] Processando categoria: {categoria}")
-        
-        # Calcular métricas
-        metricas = {
-            'categoria': categoria,
-            'media_preco': df_categoria['preco'].mean(),
-            'desvio_padrao_preco': df_categoria['preco'].std(),
-            'total_unidades_vendidas': df_categoria['quantidade'].sum(),
-            'receita_total': (df_categoria['preco'] * df_categoria['quantidade']).sum(),
-            'numero_transacoes': len(df_categoria),
-            'preco_minimo': df_categoria['preco'].min(),
-            'preco_maximo': df_categoria['preco'].max(),
-            'timestamp_processamento': datetime.now().isoformat()
-        }
-        
-        print(f"[WORKER] Categoria '{categoria}' processada:")
-        print(f"  - Média preço: R$ {metricas['media_preco']:.2f}")
-        print(f"  - Desvio padrão: R$ {metricas['desvio_padrao_preco']:.2f}")
-        print(f"  - Unidades vendidas: {metricas['total_unidades_vendidas']}")
-        print(f"  - Receita total: R$ {metricas['receita_total']:.2f}")
-        
-        return metricas
-    
-    def salvar_resultado_adios2(self, categoria, metricas, df_detalhado):
-        """
-        Salva resultados usando ADIOS2 para cada categoria
-        """
-        output_file = os.path.join(self.output_dir, f"categoria_{categoria}.csv")
-        
-        print(f"[ADIOS2] Salvando resultados para '{categoria}' em {output_file}")
-        
-        try:
-            # Criar DataFrame com métricas e dados detalhados
-            resultado = df_detalhado.copy()
-            
-            # Adicionar métricas calculadas como novas colunas
-            for key, value in metricas.items():
-                if key != 'categoria':
-                    resultado[f'metrica_{key}'] = value
-            
-            # Salvar usando CSV (em produção, usaria ADIOS2 Writer)
-            resultado.to_csv(output_file, index=False)
-            
-            # Salvar também um resumo separado
-            resumo_file = os.path.join(self.output_dir, f"resumo_{categoria}.csv")
-            pd.DataFrame([metricas]).to_csv(resumo_file, index=False)
-            
-            print(f"[ADIOS2] ✓ Arquivo salvo: {output_file}")
-            
-        except Exception as e:
-            print(f"[ERRO] Falha ao salvar categoria '{categoria}': {e}")
-    
-    def executar_workflow(self):
-        """
-        Executa o workflow completo
-        """
-        print("=" * 60)
-        print("INICIANDO WORKFLOW ADIOS2 - ANÁLISE DE VENDAS")
-        print("=" * 60)
-        
-        # Passo 1: Ler dataset
-        df = self.ler_dataset_adios2()
-        if df is None:
-            return
-        
-        # Passo 2: Agrupar por categoria
-        categorias = self.agrupar_por_categoria(df)
-        
-        # Passo 3: Processar cada categoria em paralelo (simulação)
-        print("\n[ADIOS2] Iniciando processamento paralelo...")
-        resultados = {}
-        
-        for categoria, df_categoria in categorias.items():
-            # Calcular métricas
-            metricas = self.calcular_metricas_paralelo(categoria, df_categoria)
-            resultados[categoria] = metricas
-            
-            # Salvar resultado
-            self.salvar_resultado_adios2(categoria, metricas, df_categoria)
-        
-        # Passo 4: Criar relatório consolidado
-        self.criar_relatorio_consolidado(resultados)
-        
-        print("\n" + "=" * 60)
-        print("WORKFLOW CONCLUÍDO COM SUCESSO")
-        print("=" * 60)
-        print(f"Arquivos salvos em: {self.output_dir}/")
-        
-    def criar_relatorio_consolidado(self, resultados):
-        """
-        Cria relatório consolidado de todas as categorias
-        """
-        print("\n[ADIOS2] Gerando relatório consolidado...")
-        
-        relatorio_file = os.path.join(self.output_dir, "relatorio_consolidado.csv")
-        df_relatorio = pd.DataFrame(list(resultados.values()))
-        df_relatorio.to_csv(relatorio_file, index=False)
-        
-        print(f"[ADIOS2] ✓ Relatório consolidado salvo: {relatorio_file}")
-
-
-# =====================================================
-# ARQUIVO DE CONFIGURAÇÃO ADIOS2 (XML)
-# =====================================================
-
-ADIOS2_CONFIG_XML = """<?xml version="1.0"?>
-<adios-config>
-    
-    <!-- Configuração de I/O para leitura de dados -->
-    <io name="VendasInput">
-        <engine type="BP4">
-            <parameter key="Profile" value="On"/>
-            <parameter key="ProfileUnits" value="Microseconds"/>
-            <parameter key="Threads" value="4"/>
-            <parameter key="BufferSize" value="100MB"/>
-        </engine>
-    </io>
-    
-    <!-- Configuração de I/O para escrita paralela -->
-    <io name="VendasOutput">
-        <engine type="BP4">
-            <parameter key="Profile" value="On"/>
-            <parameter key="Threads" value="4"/>
-            <parameter key="BufferSize" value="100MB"/>
-            <parameter key="BufferGrowthFactor" value="1.5"/>
-            <parameter key="InitialBufferSize" value="50MB"/>
-            <parameter key="MaxBufferSize" value="500MB"/>
-            <parameter key="FlushStepsCount" value="1"/>
-        </engine>
-        
-        <!-- Variáveis a serem escritas -->
-        <variable name="categoria">
-            <type>string</type>
-        </variable>
-        <variable name="produto_id">
-            <type>int32</type>
-        </variable>
-        <variable name="preco">
-            <type>double</type>
-        </variable>
-        <variable name="quantidade">
-            <type>int32</type>
-        </variable>
-        <variable name="data_venda">
-            <type>string</type>
-        </variable>
-        <variable name="media_preco">
-            <type>double</type>
-        </variable>
-        <variable name="desvio_padrao_preco">
-            <type>double</type>
-        </variable>
-        <variable name="total_unidades">
-            <type>int64</type>
-        </variable>
-        <variable name="receita_total">
-            <type>double</type>
-        </variable>
-    </io>
-    
-    <!-- Configuração de transporte MPI para processamento paralelo -->
-    <io name="ParallelProcessing">
-        <engine type="BP4">
-            <parameter key="OpenTimeoutSecs" value="10"/>
-            <parameter key="SubStreams" value="4"/>
-            <parameter key="CollectiveMetadata" value="On"/>
-        </engine>
-    </io>
-    
-</adios-config>
+#!/usr/bin/env python3
+"""
+Workflow ADIOS2 para análise paralela de dados de vendas no varejo.
+Agrupa por categoria e calcula estatísticas em paralelo.
 """
 
+import adios2
+import numpy as np
+import pandas as pd
+from mpi4py import MPI
+import sys
+import os
 
-# =====================================================
-# GERADOR DE DATASET DE EXEMPLO
-# =====================================================
+class VendasWorkflow:
+    def __init__(self):
+        self.comm = MPI.COMM_WORLD
+        self.rank = self.comm.Get_rank()
+        self.size = self.comm.Get_size()
+        self.adios = adios2.Adios(self.comm)
+        
+    def carregar_dados(self, arquivo_csv):
+        """Carrega o dataset de vendas (apenas no rank 0)"""
+        if self.rank == 0:
+            print(f"[Rank {self.rank}] Carregando dados de {arquivo_csv}...")
+            df = pd.read_csv(arquivo_csv)
+            print(f"[Rank {self.rank}] Dados carregados: {len(df)} registros")
+            return df
+        return None
+    
+    def distribuir_categorias(self, df):
+        """Distribui categorias entre os processos MPI"""
+        if self.rank == 0:
+            categorias = df['categoria'].unique()
+            print(f"[Rank {self.rank}] Categorias encontradas: {list(categorias)}")
+            
+            # Distribuir categorias entre ranks
+            categorias_por_rank = np.array_split(categorias, self.size)
+        else:
+            df = None
+            categorias_por_rank = None
+        
+        # Broadcast do dataframe completo para todos os ranks
+        df = self.comm.bcast(df, root=0)
+        
+        # Scatter das categorias
+        minhas_categorias = self.comm.scatter(categorias_por_rank, root=0)
+        
+        if self.rank == 0:
+            print(f"\n[Rank {self.rank}] Distribuição de categorias:")
+            for i, cats in enumerate(categorias_por_rank):
+                print(f"  Rank {i}: {list(cats)}")
+        
+        return df, minhas_categorias
+    
+    def calcular_estatisticas(self, df, categoria):
+        """Calcula estatísticas para uma categoria específica"""
+        df_cat = df[df['categoria'] == categoria].copy()
+        
+        # Calcular métricas
+        stats = {
+            'categoria': categoria,
+            'media_preco': df_cat['preco'].mean(),
+            'desvio_preco': df_cat['preco'].std(),
+            'total_unidades': df_cat['quantidade'].sum(),
+            'receita_total': (df_cat['preco'] * df_cat['quantidade']).sum(),
+            'num_vendas': len(df_cat)
+        }
+        
+        print(f"[Rank {self.rank}] Categoria '{categoria}':")
+        print(f"  - Média de preço: R$ {stats['media_preco']:.2f}")
+        print(f"  - Desvio padrão: R$ {stats['desvio_preco']:.2f}")
+        print(f"  - Total de unidades: {stats['total_unidades']}")
+        print(f"  - Receita total: R$ {stats['receita_total']:.2f}")
+        
+        return stats, df_cat
+    
+    def processar_minhas_categorias(self, df, categorias):
+        """Processa todas as categorias atribuídas a este rank"""
+        resultados = []
+        dataframes = []
+        
+        for categoria in categorias:
+            stats, df_cat = self.calcular_estatisticas(df, categoria)
+            resultados.append(stats)
+            dataframes.append(df_cat)
+        
+        return resultados, dataframes
+    
+    def escrever_com_adios(self, resultados, dataframes):
+        """Escreve os resultados usando ADIOS2"""
+        io = self.adios.declare_io("VendasIO")
+        io.set_engine("BP4")  # Engine BP4 para I/O paralelo eficiente
+        
+        # Criar diretório de saída
+        if self.rank == 0:
+            os.makedirs("output_adios", exist_ok=True)
+        self.comm.Barrier()
+        
+        # Escrever arquivo BP com todas as estatísticas
+        writer = io.open("output_adios/vendas_stats.bp", adios2.Mode.Write)
+        
+        for stats in resultados:
+            # Definir variáveis ADIOS2 para cada métrica
+            var_cat = io.define_variable(f"{stats['categoria']}_nome")
+            var_media = io.define_variable(f"{stats['categoria']}_media_preco")
+            var_desvio = io.define_variable(f"{stats['categoria']}_desvio_preco")
+            var_unidades = io.define_variable(f"{stats['categoria']}_total_unidades")
+            var_receita = io.define_variable(f"{stats['categoria']}_receita_total")
+            var_num = io.define_variable(f"{stats['categoria']}_num_vendas")
+            
+            # Escrever dados
+            writer.put(var_cat, stats['categoria'])
+            writer.put(var_media, np.array([stats['media_preco']]))
+            writer.put(var_desvio, np.array([stats['desvio_preco']]))
+            writer.put(var_unidades, np.array([stats['total_unidades']]))
+            writer.put(var_receita, np.array([stats['receita_total']]))
+            writer.put(var_num, np.array([stats['num_vendas']]))
+        
+        writer.close()
+        
+        if self.rank == 0:
+            print(f"\n[Rank {self.rank}] Estatísticas escritas em output_adios/vendas_stats.bp")
+    
+    def salvar_csvs(self, resultados, dataframes):
+        """Salva cada categoria como CSV separado"""
+        if self.rank == 0:
+            os.makedirs("output_csv", exist_ok=True)
+        self.comm.Barrier()
+        
+        for stats, df_cat in zip(resultados, dataframes):
+            categoria = stats['categoria']
+            
+            # Criar dataframe com estatísticas
+            df_stats = pd.DataFrame([stats])
+            
+            # Salvar estatísticas
+            stats_file = f"output_csv/{categoria}_estatisticas.csv"
+            df_stats.to_csv(stats_file, index=False)
+            
+            # Salvar dados detalhados
+            dados_file = f"output_csv/{categoria}_dados.csv"
+            df_cat.to_csv(dados_file, index=False)
+            
+            print(f"[Rank {self.rank}] Salvos arquivos para categoria '{categoria}':")
+            print(f"  - {stats_file}")
+            print(f"  - {dados_file}")
+    
+    def executar(self, arquivo_csv):
+        """Executa o workflow completo"""
+        print(f"\n{'='*60}")
+        print(f"WORKFLOW ADIOS2 - ANÁLISE DE VENDAS")
+        print(f"Rank {self.rank} de {self.size}")
+        print(f"{'='*60}\n")
+        
+        # 1. Carregar dados
+        df = self.carregar_dados(arquivo_csv)
+        
+        # 2. Distribuir categorias entre processos
+        df, minhas_categorias = self.distribuir_categorias(df)
+        
+        # 3. Processar categorias em paralelo
+        print(f"\n[Rank {self.rank}] Processando {len(minhas_categorias)} categoria(s)...\n")
+        resultados, dataframes = self.processar_minhas_categorias(df, minhas_categorias)
+        
+        # Sincronizar antes de escrever
+        self.comm.Barrier()
+        
+        # 4. Escrever resultados com ADIOS2
+        if len(resultados) > 0:
+            self.escrever_com_adios(resultados, dataframes)
+        
+        # 5. Salvar CSVs individuais
+        if len(resultados) > 0:
+            self.salvar_csvs(resultados, dataframes)
+        
+        # Sincronizar no final
+        self.comm.Barrier()
+        
+        if self.rank == 0:
+            print(f"\n{'='*60}")
+            print(f"WORKFLOW CONCLUÍDO COM SUCESSO!")
+            print(f"{'='*60}\n")
 
-def gerar_dataset_exemplo(filename="vendas_dataset.csv", n_registros=1000):
-    """
-    Gera um dataset de exemplo para testar o workflow
-    """
-    print(f"Gerando dataset de exemplo: {filename}")
-    
-    np.random.seed(42)
-    
-    categorias = ['Eletrônicos', 'Roupas', 'Alimentos', 'Livros', 'Móveis']
-    
-    data = {
-        'produto_id': np.arange(1, n_registros + 1),
-        'categoria': np.random.choice(categorias, n_registros),
-        'preco': np.random.uniform(10, 1000, n_registros).round(2),
-        'quantidade': np.random.randint(1, 50, n_registros),
-        'data_venda': pd.date_range('2024-01-01', periods=n_registros, freq='H').strftime('%Y-%m-%d')
-    }
-    
-    df = pd.DataFrame(data)
-    df.to_csv(filename, index=False)
-    
-    print(f"✓ Dataset gerado: {n_registros} registros")
-    return filename
 
-
-# =====================================================
-# EXECUÇÃO PRINCIPAL
-# =====================================================
-
-if __name__ == "__main__":
-    # Salvar configuração ADIOS2
-    with open("adios2_config.xml", "w") as f:
-        f.write(ADIOS2_CONFIG_XML)
-    print("✓ Arquivo de configuração ADIOS2 salvo: adios2_config.xml\n")
+def main():
+    if len(sys.argv) < 2:
+        if MPI.COMM_WORLD.Get_rank() == 0:
+            print("Uso: mpirun -np <num_processos> python workflow_vendas.py <arquivo_csv>")
+            print("Exemplo: mpirun -np 4 python workflow_vendas.py vendas.csv")
+        sys.exit(1)
     
-    # Gerar dataset de exemplo
-    input_file = gerar_dataset_exemplo()
+    arquivo_csv = sys.argv[1]
+    
+    # Validar arquivo apenas no rank 0
+    if MPI.COMM_WORLD.Get_rank() == 0:
+        if not os.path.exists(arquivo_csv):
+            print(f"Erro: Arquivo '{arquivo_csv}' não encontrado!")
+            MPI.COMM_WORLD.Abort(1)
     
     # Executar workflow
-    print()
-    workflow = VendasWorkflowADIOS2(input_file)
-    workflow.executar_workflow()
-    
-    print("\n📊 Arquivos gerados:")
-    print("  - adios2_config.xml (configuração ADIOS2)")
-    print("  - vendas_dataset.csv (dataset de entrada)")
-    print("  - output_vendas/ (resultados por categoria)")
-    print("  - output_vendas/relatorio_consolidado.csv (resumo geral)")
+    workflow = VendasWorkflow()
+    workflow.executar(arquivo_csv)
+
+
+if __name__ == "__main__":
+    main()

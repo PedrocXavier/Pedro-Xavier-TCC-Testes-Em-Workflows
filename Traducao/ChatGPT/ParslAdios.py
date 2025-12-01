@@ -1,4 +1,5 @@
-import adios2
+# import adios2 # Importação incorreta
+from adios2 import adios
 import os
 import random
 
@@ -14,7 +15,8 @@ def generate_random_bp_files():
         filenames.append(fname)
 
         # Escrevendo um único inteiro no arquivo BP
-        with adios2.open(fname, "w") as fh:
+        #  with adios2.open(fname, "w") as fh: Linha incorreta original
+        with adios.open(fname, "w") as fh:
             fh.write("value", value)
 
     return filenames

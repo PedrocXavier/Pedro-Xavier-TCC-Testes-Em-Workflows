@@ -1,155 +1,158 @@
-# vendas_workflow.py
-
-import pandas as pd
-import numpy as np
 import os
-
-# Linha original: from parsl.decorators import python_app. Necessária a correção por módulo desconhecido
-from parsl import python_app
+import pandas as pd
+from parsl.app.app import python_app
 from parsl.config import Config
-from parsl.executors import ThreadPoolExecutor
-from parsl import load, join_app, python_app, clear
-from parsl.data_provider.files import File
-from datetime import datetime, timedelta
+from parsl.executors import ThreadPoolExecutor # Mudança aqui: Importando ThreadPoolExecutor
+from typing import List, Dict, Any
 
-# --- 1. Configuração do Parsl ---
-# Usamos o ThreadPoolExecutor para paralelismo em threads
+# --- Configuração do Parsl ---
+
+# Configuração simples usando ThreadPoolExecutor para demonstrar
+# paralelismo baseado em threads dentro do mesmo processo.
+# Ideal para tarefas I/O-bound (como leitura/escrita de CSV) e mais leve para testes locais.
 config = Config(
     executors=[
-        ThreadPoolExecutor(
-            label="local_threads",
-            max_threads=4  # Ajuste o número de threads conforme os cores da sua máquina
+        ThreadPoolExecutor( # Usando ThreadPoolExecutor
+            label="threads",
+            max_threads=4,  # Define o número máximo de threads para paralelismo
         )
     ]
 )
 
-# Limpa configurações anteriores e carrega a nova
-clear()
-load(config)
+# A API Key para o Google Search não é relevante para este workflow de dados,
+# mas é mantida aqui em um comentário por boas práticas se o código fosse interagir
+# com APIs externas.
+# const apiKey = ""
 
-# --- 2. Funções do Workflow (Apps Parsl) ---
+# --- Funções de Aplicação (App) ---
 
-@python_app
-def criar_dataset(num_linhas=1000, nome_arquivo='dados_vendas.csv'):
-    """Gera um DataFrame de vendas de varejo e salva em CSV."""
+@python_app(executors=['threads']) # Mudança aqui: Usando o label 'threads'
+def analyze_category(category_data: Dict[str, List[Any]], category_name: str, output_dir: str) -> str:
+    """
+    Calcula as estatísticas de vendas para uma única categoria e salva em um arquivo CSV.
+    Esta função será executada em paralelo pelo Parsl para cada categoria.
+
+    Args:
+        category_data: Dados da categoria em formato dicionário (records).
+        category_name: Nome da categoria.
+        output_dir: Diretório onde o arquivo CSV de saída será salvo.
+
+    Returns:
+        O caminho completo para o arquivo CSV de saída.
+    """
+    try:
+        # Reconstroi o DataFrame a partir dos dados passados
+        df = pd.DataFrame.from_records(category_data['data'])
+
+        # 1. Calcular média e desvio padrão de 'preco'
+        preco_stats = df['preco'].agg(['mean', 'std']).rename(category_name)
+        
+        # 2. Calcular total de unidades vendidas
+        total_quantidade = df['quantidade'].sum()
+        
+        # 3. Calcular receita total (já calculada na função principal)
+        # Assumindo que 'receita_total' foi incluída nos dados
+        if 'receita_total' not in df.columns:
+             df['receita_total'] = df['preco'] * df['quantidade']
+             
+        total_receita = df['receita_total'].sum()
+
+        # Montar o resultado
+        result_df = pd.DataFrame({
+            'Categoria': [category_name],
+            'Preco_Medio': [preco_stats['mean']],
+            'Preco_Desvio_Padrao': [preco_stats['std']],
+            'Unidades_Vendidas_Total': [total_quantidade],
+            'Receita_Total': [total_receita]
+        })
+
+        # Cria o diretório de saída se não existir
+        os.makedirs(output_dir, exist_ok=True)
+        
+        output_filepath = os.path.join(output_dir, f"{category_name.replace(' ', '_')}_vendas.csv")
+        result_df.to_csv(output_filepath, index=False, sep=';', decimal=',')
+        
+        return f"Processamento da categoria '{category_name}' concluído. Arquivo salvo em: {output_filepath}"
     
-    # Simulação de dados
-    np.random.seed(42)
-    categorias = ['Eletrônicos', 'Vestuário', 'Alimentos', 'Livros', 'Casa']
-    
+    except Exception as e:
+        return f"Erro ao processar categoria '{category_name}': {e}"
+
+
+# --- Funções Auxiliares e Workflow Principal ---
+
+def generate_mock_data(filepath: str, num_records: int = 1000) -> None:
+    """Gera um dataset de vendas simulado."""
     data = {
-        'produto_id': np.arange(1000, 1000 + num_linhas),
-        'categoria': np.random.choice(categorias, num_linhas),
-        'preco': np.random.uniform(10.0, 500.0, num_linhas).round(2),
-        'quantidade': np.random.randint(1, 10, num_linhas),
-        'data_venda': [datetime(2023, 1, 1) + timedelta(days=np.random.randint(0, 365)) for _ in range(num_linhas)]
+        'produto_id': range(1, num_records + 1),
+        'categoria': [f"Categoria_{i % 5 + 1}" for i in range(num_records)],
+        'preco': [round(abs(10 + i % 100 * 0.5 + i % 10 * 0.1), 2) for i in range(num_records)],
+        'quantidade': [i % 5 + 1 for i in range(num_records)],
+        'data_venda': pd.to_datetime('2023-01-01') + pd.to_timedelta([i * 3 for i in range(num_records)], unit='h')
     }
-    
     df = pd.DataFrame(data)
-    df.to_csv(nome_arquivo, index=False)
-    
-    print(f"Dataset criado em: {nome_arquivo}")
-    return nome_arquivo # Retorna o nome do arquivo para o próximo passo
+    df.to_csv(filepath, index=False)
+    print(f"Dataset de simulação gerado em: {filepath}")
 
+def run_workflow(input_filepath: str, output_directory: str = "resultados_por_categoria") -> None:
+    """
+    Função principal que coordena o workflow de processamento de vendas.
+    """
+    import parsl
+    
+    try:
+        # Inicializa o Parsl
+        parsl.load(config)
+        print("Parsl inicializado.")
 
-# Esta função não é um app Parsl, mas sim uma função utilitária sequencial
-# para a orquestração do fluxo.
-def agrupar_por_categoria(caminho_arquivo):
-    """
-    Lê o dataset, agrupa por categoria e retorna uma lista de grupos.
-    
-    No Parsl, é mais eficiente carregar o DF uma vez e passar os dados agrupados
-    para os apps paralelos (se o volume de dados permitir a serialização
-    ou se usarmos um mecanismo de arquivos intermediários).
-    Aqui, faremos a leitura e o agrupamento para dividir o trabalho.
-    """
-    df = pd.read_csv(caminho_arquivo)
-    
-    # Garantindo que 'preco' e 'quantidade' sejam numéricos
-    df['preco'] = pd.to_numeric(df['preco'])
-    df['quantidade'] = pd.to_numeric(df['quantidade'])
-    
-    grupos = []
-    # Cria uma cópia do DataFrame do grupo para evitar side-effects
-    for categoria, grupo_df in df.groupby('categoria'):
-        grupos.append((categoria, grupo_df.copy()))
+        # 1. Leitura do Dataset
+        print(f"Lendo o dataset de vendas: {input_filepath}")
+        df_vendas = pd.read_csv(input_filepath)
+
+        # 2. Pré-processamento: Calcular 'receita_total' (preco * quantidade)
+        df_vendas['receita_total'] = df_vendas['preco'] * df_vendas['quantidade']
         
-    print(f"Dados agrupados em {len(grupos)} categorias.")
-    return grupos
+        # 3. Agrupamento dos dados por 'categoria'
+        grupos = df_vendas.groupby('categoria')
+        print(f"Dataset agrupado em {len(grupos)} categorias.")
 
+        futures = []
 
-@python_app
-def calcular_estatisticas(categoria, grupo_df, output_dir='output_vendas'):
-    """
-    Calcula métricas para um grupo de categoria e salva o resultado em CSV.
-    Esta função será executada em paralelo para cada categoria.
-    """
-    
-    # Cálculo da Receita Total
-    grupo_df['receita'] = grupo_df['preco'] * grupo_df['quantidade']
-    
-    # Cálculo das Métricas
-    media_preco = grupo_df['preco'].mean()
-    desvio_padrao_preco = grupo_df['preco'].std()
-    total_unidades = grupo_df['quantidade'].sum()
-    receita_total = grupo_df['receita'].sum()
-    
-    # Cria o DataFrame de resultados
-    resultado = pd.DataFrame([{
-        'categoria': categoria,
-        'media_preco': media_preco,
-        'desvio_padrao_preco': desvio_padrao_preco,
-        'total_unidades_vendidas': total_unidades,
-        'receita_total': receita_total
-    }])
-    
-    # Cria o diretório de saída se não existir
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+        # 4. Lançamento das Aplicações Parsl em Paralelo
+        for categoria, dados_categoria in grupos:
+            print(f"Lançando análise paralela para a categoria: {categoria}...")
+            
+            # Converte o sub-DataFrame para um formato serializável (dicionário de records)
+            # para ser enviado eficientemente ao worker
+            dados_serializaveis = {'data': dados_categoria.to_dict('records')}
+            
+            # Envia a tarefa para execução paralela
+            future = analyze_category(dados_serializaveis, categoria, output_directory)
+            futures.append(future)
+
+        # 5. Esperar pela conclusão de todas as tarefas e coletar resultados
+        print("\nEsperando que todas as tarefas paralelas sejam concluídas...")
+        results = [f.result() for f in futures]
+
+        # Exibe os resultados
+        print("\n--- Relatório de Conclusão das Tarefas ---")
+        for result in results:
+            print(result)
+
+        print(f"\nWorkflow concluído. Arquivos de saída salvos no diretório: {output_directory}")
+
+    except Exception as e:
+        print(f"Um erro ocorreu durante o workflow: {e}")
+    finally:
+        # Desliga o Parsl (boa prática)
+        parsl.clear()
         
-    # Define o nome do arquivo de saída
-    nome_saida = os.path.join(output_dir, f'estatisticas_{categoria.lower().replace(" ", "_")}.csv')
+# --- Execução Principal ---
+if __name__ == "__main__":
+    DATASET_FILENAME = "vendas.csv"
     
-    # Salva o resultado no arquivo CSV
-    resultado.to_csv(nome_saida, index=False)
-    
-    print(f"Estatísticas de '{categoria}' salvas em: {nome_saida}")
-    return nome_saida
+    # 1. Gera dados de simulação (se o arquivo não existir)
+    if not os.path.exists(DATASET_FILENAME):
+        generate_mock_data(DATASET_FILENAME, num_records=5000)
 
-
-# --- 3. Fluxo Principal do Workflow ---
-
-if __name__ == '__main__':
-    
-    # 1. Geração do Dataset (App Parsl)
-    print("Iniciando a geração do dataset...")
-    future_caminho_dataset = criar_dataset(num_linhas=50000)
-    caminho_dataset = future_caminho_dataset.result()
-    
-    # 2. Leitura e Agrupamento (Sequencial)
-    # Bloqueia a execução até que o arquivo esteja pronto.
-    grupos_de_dados = agrupar_por_categoria(caminho_dataset)
-    
-    # 3. Processamento Paralelo por Categoria (Apps Parsl)
-    print("\nIniciando processamento paralelo por categoria...")
-    futures_resultados = []
-    
-    for categoria, grupo_df in grupos_de_dados:
-        # Lança a função de cálculo em paralelo para cada categoria
-        future = calcular_estatisticas(categoria, grupo_df)
-        futures_resultados.append(future)
-    
-    # 4. Espera pelos resultados e coleta dos caminhos de saída
-    # O Parsl gerencia a execução em paralelo de todos os apps 'calcular_estatisticas'
-    caminhos_de_saida = [f.result() for f in futures_resultados]
-    
-    print("\n--- Workflow Concluído ---")
-    print("Arquivos de saída gerados:")
-    for caminho in caminhos_de_saida:
-        print(f"- {caminho}")
-    
-    # Exemplo de como ler e exibir um dos resultados
-    print("\nConteúdo de um arquivo de exemplo ('Livros'):")
-    caminho_livros = [c for c in caminhos_de_saida if 'livros' in c][0]
-    df_resultado_exemplo = pd.read_csv(caminho_livros)
-    print(df_resultado_exemplo)
+    # 2. Executa o workflow
+    run_workflow(DATASET_FILENAME)
